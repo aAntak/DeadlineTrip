@@ -1,24 +1,46 @@
-﻿@model IEnumerable<Advertisement>
+﻿@model IEnumerable<AdsListViewModel>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Card</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var ad in Model)
-            {
-                <tr>
-                    <th scope="row">@ad.Id</th>
-                    <td>@ad.Price</td>
-                    <td>@ad.Quantity</td>
-                    <td>@ad.Card</td>
-                </tr>
-          
-            }
-            </tbody>
-        </table>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th class="text-center">Price</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="col-sm-8 col-md-6">
+                                <div class="media">
+                                    <a class="thumbnail pull-left" href="#"> <img class="media-object" src="@item.Cards.Image" style="width: 72px; height: 72px;"> </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a href="#">@item.Cards.Name</a></h4>
+                                        <h5 class="media-heading"><a href="#">@item.Cards.Level</a></h5>
+                                        <span>Retumas: </span><span class="text-success"><strong>@item.Cards.Retumas</strong></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>@item.Advertisements.Quantity</strong></td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>$@item.Advertisements.Price</strong></td>
+                            <td class="col-sm-1 col-md-1">
+                                <button type="button" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-remove"></span> Remove
+                                </button>
+                            </td>
+                        </tr>
+
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

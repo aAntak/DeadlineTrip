@@ -27,19 +27,21 @@ namespace deadlineTrip.Models
             var context = services.GetService<AppDbContext>();
 
             string accountId = session.GetString("username"); //?? Guid.NewGuid().ToString();
-
             session.SetString("username", accountId);
 
             return new AdvertisementRepository(context) { AccountId = accountId };
         }
 
+
         public IEnumerable<Advertisement> GetAllAdvertisements()
         {
-
-             return Advertisements ??
+            var allCards = _appDbContext.Card;
+            var ads = Advertisements ??
                    (Advertisements =
                        _appDbContext.Advertisements.Where(c => c.AccountId == AccountId)
                            .ToList());
+   
+            return ads;
         }
 
     }

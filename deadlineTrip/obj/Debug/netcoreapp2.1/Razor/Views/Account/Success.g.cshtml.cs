@@ -23,13 +23,18 @@ using deadlineTrip.Models;
 
 #line default
 #line hidden
+#line 3 "C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\Views\_ViewImports.cshtml"
+using deadlineTrip.ViewModels;
+
+#line default
+#line hidden
 #line 3 "C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\Views\Account\Success.cshtml"
 using Microsoft.AspNetCore.Http;
 
 #line default
 #line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"093cdc43d0feaa0f25629a80d4121b5010d1effa", @"/Views/Account/Success.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d9d802ea258bb51d5bae80b12595bd19cd640db6", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"79fad3e897a606fc9281c8a48b380e1c0cb91dc7", @"/Views/_ViewImports.cshtml")]
     public class Views_Account_Success : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "account", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -73,7 +78,7 @@ using Microsoft.AspNetCore.Http;
             WriteLiteral("\r\n    <br>\r\n    ");
             EndContext();
             BeginContext(136, 58, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "19dc7a12acf74dc29ef0f61add0dde53", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2a5c45a5b3a84e54a9a223edbf95203a", async() => {
                 BeginContext(184, 6, true);
                 WriteLiteral("Logout");
                 EndContext();

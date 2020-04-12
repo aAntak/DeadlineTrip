@@ -9,9 +9,13 @@ namespace deadlineTrip.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Image { get; set; }
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int Level { get; set; }
         public Retumas Retumas { get; set; }
+
+
     }
 }
+

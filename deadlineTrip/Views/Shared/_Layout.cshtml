@@ -30,10 +30,13 @@
                         Advertisement
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Create Advertisement</a>
-                        <a class="nav-link" asp-controller="advertisement" asp-action="list"> Your Advertisement List</a>
+                        @if (@Context.Session.GetString("username") != null)
+                        {
+                        <a class="nav-link" asp-controller="advertisement" asp-action="create"> Create Ad</a>
+                            <a class="nav-link" asp-controller="advertisement" asp-action="list"> Your Ad List</a>
+                        }
 
-                    </div>
+                        </div>
                 </li>
                 @if (@Context.Session.GetString("username") != null)
                 {

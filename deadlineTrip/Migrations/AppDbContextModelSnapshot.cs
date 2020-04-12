@@ -51,7 +51,7 @@ namespace deadlineTrip.Migrations
 
                     b.Property<string>("AccountId");
 
-                    b.Property<int?>("CardId");
+                    b.Property<int>("CardId");
 
                     b.Property<decimal>("Price");
 
@@ -66,9 +66,9 @@ namespace deadlineTrip.Migrations
                     b.ToTable("Advertisements");
 
                     b.HasData(
-                        new { Id = 1, AccountId = "Pirmas@gmail.com", Price = 46m, Quantity = 46 },
-                        new { Id = 2, AccountId = "Pirmas@gmail.com", Price = 52m, Quantity = 46 },
-                        new { Id = 3, AccountId = "Trecias@gmail.com", Price = 14m, Quantity = 46 }
+                        new { Id = 1, AccountId = "Pirmas@gmail.com", CardId = 1, Price = 46m, Quantity = 46 },
+                        new { Id = 2, AccountId = "Pirmas@gmail.com", CardId = 2, Price = 52m, Quantity = 46 },
+                        new { Id = 3, AccountId = "Trecias@gmail.com", CardId = 3, Price = 14m, Quantity = 46 }
                     );
                 });
 
@@ -82,6 +82,8 @@ namespace deadlineTrip.Migrations
 
                     b.Property<int>("Defense");
 
+                    b.Property<string>("Image");
+
                     b.Property<int>("Level");
 
                     b.Property<string>("Name");
@@ -93,6 +95,12 @@ namespace deadlineTrip.Migrations
                     b.HasIndex("Retumasid");
 
                     b.ToTable("Card");
+
+                    b.HasData(
+                        new { Id = 1, Attack = 25, Defense = 42, Image = "https://static.cardmarket.com/img/9274d1a282a820759dbbf43d35d14a4d/items/5/DUOV/442543.jpg", Level = 3, Name = "Predaplant Verte Anaconda" },
+                        new { Id = 2, Attack = 42, Defense = 100, Image = "https://static.cardmarket.com/img/9274d1a282a820759dbbf43d35d14a4d/items/5/DUOV/442843.jpg", Level = 1, Name = "PSY-Framelord Omega" },
+                        new { Id = 3, Attack = 9999, Defense = 9999, Image = "https://lh3.googleusercontent.com/proxy/vBhKwbhLVflNslii0Ycy2El2BrErJbRL9Chck3w_BIK9UYlhD1JsH8uk_EMEHjZJIc33qZHRJxSMsPR8BvxLSzNLlQ10mAoO4wMvi9qH_-o1JImao2JXYQDGy7cEC52Pc6lYbmnaBVL6Isab_XdrVKYaNxgUElngFYc6Wud8NlACspGwp4wpyf6_yu2TDTI_wwDEAjgba4akf9o85t_P207cWkU", Level = 99, Name = "Bebru valdovas" }
+                    );
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.Retumas", b =>
@@ -116,7 +124,8 @@ namespace deadlineTrip.Migrations
 
                     b.HasOne("deadlineTrip.Models.Card", "Card")
                         .WithMany()
-                        .HasForeignKey("CardId");
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.Card", b =>

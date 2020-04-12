@@ -35,6 +35,7 @@ namespace deadlineTrip
 
             services.AddScoped<IAdvertisementRepository, AdvertisementRepository>(sp => AdvertisementRepository.GetUser(sp));
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<ICardRepository, CardRepository>();
             //services.AddScoped<AdvertisementRepository>(sp => AdvertisementRepository.GetUser(sp));
 
             services.AddDbContext<AppDbContext>(options =>
@@ -48,7 +49,7 @@ namespace deadlineTrip
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+          
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

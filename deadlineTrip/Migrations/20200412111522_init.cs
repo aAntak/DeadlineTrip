@@ -1,12 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace deadlineTrip.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Accounts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    BirthDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Retumas",
                 columns: table => new
@@ -27,6 +43,7 @@ namespace deadlineTrip.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
                     Attack = table.Column<int>(nullable: false),
                     Defense = table.Column<int>(nullable: false),
                     Level = table.Column<int>(nullable: false),
@@ -51,11 +68,18 @@ namespace deadlineTrip.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Price = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
+                    AccountId = table.Column<string>(nullable: true),
                     CardId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Advertisements", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Advertisements_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Advertisements_Card_CardId",
                         column: x => x.CardId,
@@ -64,20 +88,10 @@ namespace deadlineTrip.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
+            migrationBuilder.CreateIndex(
+                name: "IX_Advertisements_AccountId",
                 table: "Advertisements",
-                columns: new[] { "Id", "CardId", "Price", "Quantity" },
-                values: new object[] { 1, null, 46m, 46 });
-
-            migrationBuilder.InsertData(
-                table: "Advertisements",
-                columns: new[] { "Id", "CardId", "Price", "Quantity" },
-                values: new object[] { 2, null, 52m, 46 });
-
-            migrationBuilder.InsertData(
-                table: "Advertisements",
-                columns: new[] { "Id", "CardId", "Price", "Quantity" },
-                values: new object[] { 3, null, 14m, 46 });
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Advertisements_CardId",
@@ -94,6 +108,9 @@ namespace deadlineTrip.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Advertisements");
+
+            migrationBuilder.DropTable(
+                name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "Card");

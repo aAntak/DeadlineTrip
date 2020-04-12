@@ -23,8 +23,13 @@ using deadlineTrip.Models;
 
 #line default
 #line hidden
+#line 3 "C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\Views\_ViewImports.cshtml"
+using deadlineTrip.ViewModels;
+
+#line default
+#line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7091c65830b0329e613be026ede8a57552863778", @"/Views/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d9d802ea258bb51d5bae80b12595bd19cd640db6", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"79fad3e897a606fc9281c8a48b380e1c0cb91dc7", @"/Views/_ViewImports.cshtml")]
     public class Views__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

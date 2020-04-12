@@ -12,6 +12,7 @@ namespace deadlineTrip.Models
         public int Quantity { get; set; }
 
         public string AccountId { get; set; }
+        public int CardId { get; set; }
         public Card Card { get; set; }
     }
 }

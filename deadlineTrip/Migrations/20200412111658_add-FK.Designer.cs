@@ -10,8 +10,8 @@ using deadlineTrip.Models;
 namespace deadlineTrip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200411180257_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20200412111658_add-FK")]
+    partial class addFK
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,13 +21,33 @@ namespace deadlineTrip.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("deadlineTrip.Models.Account", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("BirthDate");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Password");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Accounts");
+                });
+
             modelBuilder.Entity("deadlineTrip.Models.Advertisement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CardId");
+                    b.Property<string>("AccountId");
+
+                    b.Property<int>("CardId");
 
                     b.Property<decimal>("Price");
 
@@ -35,15 +55,11 @@ namespace deadlineTrip.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.HasIndex("CardId");
 
                     b.ToTable("Advertisements");
-
-                    b.HasData(
-                        new { Id = 1, Price = 46m, Quantity = 46 },
-                        new { Id = 2, Price = 52m, Quantity = 46 },
-                        new { Id = 3, Price = 14m, Quantity = 46 }
-                    );
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.Card", b =>
@@ -55,6 +71,8 @@ namespace deadlineTrip.Migrations
                     b.Property<int>("Attack");
 
                     b.Property<int>("Defense");
+
+                    b.Property<string>("Image");
 
                     b.Property<int>("Level");
 
@@ -84,9 +102,14 @@ namespace deadlineTrip.Migrations
 
             modelBuilder.Entity("deadlineTrip.Models.Advertisement", b =>
                 {
+                    b.HasOne("deadlineTrip.Models.Account")
+                        .WithMany("Advertisements")
+                        .HasForeignKey("AccountId");
+
                     b.HasOne("deadlineTrip.Models.Card", "Card")
                         .WithMany()
-                        .HasForeignKey("CardId");
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.Card", b =>

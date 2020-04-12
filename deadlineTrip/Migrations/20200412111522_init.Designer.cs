@@ -10,8 +10,8 @@ using deadlineTrip.Models;
 namespace deadlineTrip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200412000255_test")]
-    partial class test
+    [Migration("20200412111522_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,12 +37,6 @@ namespace deadlineTrip.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
-
-                    b.HasData(
-                        new { Id = "Pirmas@gmail.com", BirthDate = new DateTime(2015, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), LastName = "Pirmaitis", Name = "Pirmas", Password = "test" },
-                        new { Id = "Antras@gmail.com", BirthDate = new DateTime(2015, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), LastName = "Antraitis", Name = "Antras", Password = "test" },
-                        new { Id = "Trecias@gmail.com", BirthDate = new DateTime(2015, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), LastName = "Trecaitis", Name = "Trecias", Password = "test" }
-                    );
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.Advertisement", b =>
@@ -66,12 +60,6 @@ namespace deadlineTrip.Migrations
                     b.HasIndex("CardId");
 
                     b.ToTable("Advertisements");
-
-                    b.HasData(
-                        new { Id = 1, AccountId = "Pirmas@gmail.com", Price = 46m, Quantity = 46 },
-                        new { Id = 2, AccountId = "Pirmas@gmail.com", Price = 52m, Quantity = 46 },
-                        new { Id = 3, AccountId = "Trecias@gmail.com", Price = 14m, Quantity = 46 }
-                    );
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.Card", b =>
@@ -83,6 +71,8 @@ namespace deadlineTrip.Migrations
                     b.Property<int>("Attack");
 
                     b.Property<int>("Defense");
+
+                    b.Property<string>("Image");
 
                     b.Property<int>("Level");
 
