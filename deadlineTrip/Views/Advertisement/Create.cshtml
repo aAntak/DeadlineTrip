@@ -1,1 +1,7 @@
-﻿<p> Routing test</p>
+﻿
+@model Advertisement
+    <form asp-controller="Advertisement" asp-action="creates" method="post">
+        Price:  <input asp-for="Price" /> <br />
+        Quantity: <input asp-for="Quantity" /><br />
+        <button type="submit">Register</button>
+    </form>

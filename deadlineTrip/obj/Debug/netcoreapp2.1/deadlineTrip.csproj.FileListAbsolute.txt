@@ -31,3 +31,4 @@ C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\net
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Advertisement\Index.g.cshtml.cs
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Advertisement\Create.g.cshtml.cs
+C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Advertisement\test.g.cshtml.cs
