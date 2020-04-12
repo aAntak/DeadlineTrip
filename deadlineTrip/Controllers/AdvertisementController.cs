@@ -13,18 +13,20 @@ namespace deadlineTrip.Controllers
     {
         // GET: /<controller>/
         private readonly IAdvertisementRepository _advertisementRepository;
-
+        private readonly IAccountRepository _accountRepository;
 
         //  AddScope injects repositories into controller
         //when class requires these types they will be injected auto
         // by the built-in dependecy injection system
-        public AdvertisementController(IAdvertisementRepository advertisementRepository)
+        public AdvertisementController(IAdvertisementRepository advertisementRepository, IAccountRepository accountRepository)
         {
             _advertisementRepository = advertisementRepository;
+            _accountRepository = accountRepository;
         }
         public ViewResult List()
         {
-            return View(_advertisementRepository.AllAdvertisements);
+
+            return View(_advertisementRepository.GetAllAdvertisements());
         }
 
 

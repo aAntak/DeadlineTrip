@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <link href="~/Content/site.css" rel="stylesheet" />
 </head>
 <body>
@@ -24,33 +24,52 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Auction</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Advertisements</a>
-                </li>
+
                 <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Advertisement
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Create Advertisement</a>
+                        <a class="nav-link" asp-controller="advertisement" asp-action="list"> Your Advertisement List</a>
+
+                    </div>
+                </li>
+                @if (@Context.Session.GetString("username") != null)
+                {
+                    <li class="nav-item">
+                        @* du budai *@
+                        <a class="nav-link" href="/Account/logout">logout </a>
+                        @*<a asp-controller="account" asp-action="logout">Logout</a>*@
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Account/">login </a>
+                        @*<a asp-controller="account" asp-action="index">Login</a>*@
+                    </li>
+                }
+            </ul>
+            <div class="dropdown-menu">
                 <a class="dropdown-item" href="#">Action</a>
                 <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
             </div>
-        </li>
-                <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-            </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </nav>
-    
-                
-                    @RenderBody()
+    @RenderBody()
+    Welcome @Context.Session.GetString("username")
 
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/js/bootstrap.js"></script>
+<script src="~/lib/popper.js/popper.min.js"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@ namespace deadlineTrip.Models
 {
     public interface IAdvertisementRepository
     {
-        IEnumerable<Advertisement> AllAdvertisements { get; }
+        IEnumerable<Advertisement> GetAllAdvertisements();
 
     }
 }

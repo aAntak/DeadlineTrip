@@ -11,6 +11,7 @@ namespace deadlineTrip.Models
         public decimal Price { get; set; }
         public int Quantity { get; set; }
 
+        public string AccountId { get; set; }
         public Card Card { get; set; }
     }
 }

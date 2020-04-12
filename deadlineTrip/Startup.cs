@@ -33,13 +33,25 @@ namespace deadlineTrip
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();
+            services.AddScoped<IAdvertisementRepository, AdvertisementRepository>(sp => AdvertisementRepository.GetUser(sp));
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            //services.AddScoped<AdvertisementRepository>(sp => AdvertisementRepository.GetUser(sp));
 
             services.AddDbContext<AppDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddHttpContextAccessor();
+
+            // services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,12 +71,19 @@ namespace deadlineTrip
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+           
+
+            app.UseSession();
+
+
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
     }
 }
