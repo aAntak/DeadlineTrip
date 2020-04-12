@@ -25,6 +25,7 @@ namespace deadlineTrip.Models
                          .ToList());
             // Advertisements.Join(allCards, card => card.CardId, advertise)
         }
+        
 
 
     }

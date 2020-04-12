@@ -21,6 +21,11 @@ namespace deadlineTrip.Controllers
         {
             _cardRepository = cardRepository;
         }
+
+        public JsonResult AjaxGetCards()
+        {
+            return Json(_cardRepository.getAllCards());
+        }
         public ViewResult List()
         {
 

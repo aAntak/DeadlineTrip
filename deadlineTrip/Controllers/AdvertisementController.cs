@@ -42,11 +42,25 @@ namespace deadlineTrip.Controllers
 
         public ViewResult Create()
         {
+            ViewBag.Cards = _cardRepository.getAllCards().Select(x=>x.Name).ToArray();
 
-        
-           
-            
             return View();
+        }
+        
+
+        [HttpPost]
+        public ActionResult SubmitCreateAction(IFormCollection collection)
+        {
+            // Get Post Params Here
+            //decimal Price = Convert.ToDecimal(collection["price"]);
+            //int Quantity = Convert.ToInt32(collection["quantity"]);
+
+            // Account id session
+            //public int CardId = 
+// card = _cardRepository.
+
+
+            return RedirectToAction("list", "Advertisement");
         }
 
 
