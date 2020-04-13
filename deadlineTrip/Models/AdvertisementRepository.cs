@@ -50,9 +50,21 @@ namespace deadlineTrip.Models
             _appDbContext.SaveChanges();
         }
 
+        public void Delete(int id)
+        {
+
+            Advertisement ad = _appDbContext.Advertisements.Find(id);
+
+            _appDbContext.Remove(ad);
+
+            _appDbContext.SaveChanges();
 
 
-        
+        }
+
+
+
+
 
     }
 }

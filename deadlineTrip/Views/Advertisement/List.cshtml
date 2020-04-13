@@ -29,9 +29,10 @@
                             <td class="col-sm-1 col-md-1 text-center"><strong>@item.Advertisements.Quantity</strong></td>
                             <td class="col-sm-1 col-md-1 text-center"><strong>$@item.Advertisements.Price</strong></td>
                             <td class="col-sm-1 col-md-1">
-                                <button type="button" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span> Remove
-                                </button>
+                                @*<button type="button" class="btn btn-danger">
+            <span class="glyphicon glyphicon-remove"></span> Remove
+        </button>*@
+                            <a class="btn btn-danger" asp-controller="Advertisement" asp-action="Delete" asp-route-id="@item.Advertisements.Id">Remove</a> 
                             </td>
                         </tr>
 

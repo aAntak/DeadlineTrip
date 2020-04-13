@@ -69,6 +69,13 @@ namespace deadlineTrip.Controllers
             return RedirectToAction("list", "Advertisement");
         }
 
+        public ActionResult Delete(int id)
+        {
+            _advertisementRepository.Delete(id);
+
+            return RedirectToAction("list", "Advertisement");
+        }
+
 
 
     }

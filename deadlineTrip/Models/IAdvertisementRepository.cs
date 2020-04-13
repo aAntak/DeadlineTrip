@@ -9,6 +9,7 @@ namespace deadlineTrip.Models
     {
         IEnumerable<Advertisement> GetAllAdvertisements();
         void InsertRow(Advertisement ad);
+        void Delete(int id);
 
     }
 }
