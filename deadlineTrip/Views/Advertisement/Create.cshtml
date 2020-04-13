@@ -1,77 +1,88 @@
 ﻿
 @model AdsListViewModel
-@*<form asp-controller="Advertisement" asp-action="SubmitCreateAction" method="post">
-        Price:  <input asp-for="Price" /> <br />
-        Quantity: <input asp-for="Quantity" /><br />
-        <button type="submit">Add Advertisement</button>
-    </form>*@
 
-@foreach (var item in ViewBag.Cards)
-{
-    <p>@item</p>
-}
+
+
 <form asp-controller="Advertisement" asp-action="SubmitCreateAction" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Advertisements.CardId" class="control-label"></label>
-        <input asp-for="Advertisements.CardId" id="cardid" class="form-control" value="" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Cards.Name" class="control-label"></label>
-        <input asp-for="Cards.Name" id="cardInput" class="form-control" />
-        <span asp-validation-for="Cards.Name" class="text-danger"></span>
-    </div>
-    <select class="custom-select custom-select-sm" asp-for="Cards.Retumas">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div id="sectionHeading">
+                    <div class="form-group" hidden>
+                        <label asp-for="Advertisements.CardId" class="control-label"></label>
+                        <input asp-for="Advertisements.CardId" id="cardid" class="form-control" value="" />
+                    </div>
 
-        <option value="" disabled selected>Choose your option</option>
-    </select>
+                    <div class="md-form">
+                        <label asp-for="Cards.Name">Type the card you want to sell</label>
+                        <input asp-for="Cards.Name" autocomplete="off" id="cardInput" type="text" class="form-control" />
+                        <span asp-validation-for="Cards.Name" class="text-danger"></span>
+                    </div>
+
+                    <div id="rarityWrapper" hidden>
+                        <div class="md-form">
+                            <select class="custom-select custom-select-sm" asp-for="Cards.Retumas">
+                                <option value="" disabled selected>Choose your card's rarity</option>
+                            </select>
+                        </div>
+                    </div>
+             </div>
+
+
+            <div id="sectionForm"  hidden>
+
+                <div class="row flex-center">
+
+                    <div class="col-lg-6 col-md-8">
+
+                        <h4 class="py-lg-4 pb-4 text-center">Card Information</h4>
+
+                        <!--Card-->
+                        <div class="card card-cascade d-flex flex-row ">
+
+                            <!--Card image-->
+                            <div class="view view-cascade">
+
+                            </div>
+                            <!--/.Card image-->
+                            <!--Card content-->
+                            <div class="card-body card-body-cascade text-center ">
 
 
 
+                            </div>
 
-    <div class="form-group">
-        <label asp-for="Cards.Image" class="control-label"></label>
-        <input asp-for="Cards.Image" class="form-control" />
-        <span asp-validation-for="Cards.Image" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Cards.Level" class="control-label"></label>
-        <input asp-for="Cards.Level" class="form-control" />
-        <span asp-validation-for="Cards.Level" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Cards.Attack" class="control-label"></label>
-        <input asp-for="Cards.Attack" class="form-control" />
-        <span asp-validation-for="Cards.Attack" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Cards.Defense" class="control-label"></label>
-        <input asp-for="Cards.Defense" class="form-control" />
-        <span asp-validation-for="Cards.Defense" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Advertisements.Price" class="control-label"></label>
-        <input asp-for="Advertisements.Price" class="form-control" />
-        <span asp-validation-for="Advertisements.Price" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Advertisements.Quantity" class="control-label"></label>
-        <input asp-for="Advertisements.Quantity" class="form-control" />
-        <span asp-validation-for="Advertisements.Quantity" class="text-danger"></span>
-    </div>
 
-    @*<div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-            </button>
-            <div class="dropdown-menu" id="cardRarityDropdown" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                        <div class="md-form">
+                            <label asp-for="Advertisements.Price" class="control-label"></label>
+                            <input asp-for="Advertisements.Price" class="form-control" />
+                            <span asp-validation-for="Advertisements.Price" class="text-danger"></span>
+                        </div>
+                        <div class="md-form">
+                            <label asp-for="Advertisements.Quantity" class="control-label"></label>
+                            <input asp-for="Advertisements.Quantity" class="form-control" />
+                            <span asp-validation-for="Advertisements.Quantity" class="text-danger"></span>
+                        </div>
+                        <div class="flex-center">
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                         </div>
+                                <!--/.Card-->
+
+                            </div>
+                        </div>
+
+
             </div>
-        </div>*@
-    <button type="submit" class="btn btn-primary">Submit</button>
+  
+                
+            </div>
+            </div>
+</div>
 </form>
+
+
 
 <script>
     var xmlhttp;
@@ -85,7 +96,6 @@
     xmlhttp.open("POST", "/Card/AjaxGetCards", true);
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            alert(xmlhttp.responseText);
             cards = JSON.parse(xmlhttp.responseText);
             cardNames = cards.map(a => a.name);
             autocomplete(document.getElementById("cardInput"), cardNames);
@@ -96,7 +106,10 @@
 
     document.getElementById("Cards_Retumas").addEventListener('change', (event) => {
         populateForm();
-});
+        unhideSectionForm();
+        hideHeadingForm();
+        
+    });
 
 
     function autocomplete(inp, arr) {
@@ -133,6 +146,7 @@
                         inp.value = this.getElementsByTagName("input")[0].value;
                         /*close the list of autocompleted values,
                         (or any other open lists of autocompleted values:*/
+                         unhideRarity()
                         closeAllLists();
                     });
                     a.appendChild(b);
@@ -161,6 +175,7 @@
                 if (currentFocus > -1) {
                     /*and simulate a click on the "active" item:*/
                     if (x) x[currentFocus].click();
+                    
                 }
             }
 
@@ -183,7 +198,6 @@
             }
         }
         function bindValue() {
-            var cardId = document.getElementById("cardid")
             var cardInput = document.getElementById("cardInput")
             var matchedCards = cards.filter(x => x.name == cardInput.value);
             var matchedRarities = matchedCards.map(a => a.retumas);
@@ -193,16 +207,16 @@
             }
 
         }
-       
+
         function deleteChilds(list) {
-            while (list.hasChildNodes()) {  
-               list.removeChild(list.firstChild);
-        } 
+            while (list.hasChildNodes()) {
+                list.removeChild(list.firstChild);
+            }
         }
         function initRarityDropDown(rarityField) {
             deleteChilds(rarityField);
             option = document.createElement("OPTION");
-            option.text = "Choose your option";
+            option.text = "Choose your card's rarity";
             option.value = "";
             option.setAttribute("disabled", "");
             option.setAttribute("selected", "");
@@ -210,16 +224,17 @@
         }
         function populateRarities(matchedRarities) {
             rarityField = document.getElementById("Cards_Retumas");
-            
+
             initRarityDropDown(rarityField)
-            for (i = 0; i < matchedRarities.length; i++) { 
+            for (i = 0; i < matchedRarities.length; i++) {
                 option = document.createElement("OPTION");
                 option.text = matchedRarities[i];
                 option.value = matchedRarities[i];
                 rarityField.appendChild(option);
 
-        }
-  
+            }
+            
+
         }
         function closeAllLists(elmnt) {
             /*close all autocomplete lists in the document,
@@ -232,54 +247,89 @@
             }
 
             bindValue()
-
-
-        }
-
-
-        /*execute a function when someone clicks in the document:*/
-        //document.getElementsByClassName("autocomplete-items").addEventListener("click", function (e) {
-        //    closeAllLists(e.target);
-        //    var cardId = document.getElementById("CardId")
-        //    cardId.value = "Test";
-        //    alert(e.target.innerText)
-        //});
-    }
-
-     function populateForm() {
-        var cardInput = document.getElementById("cardInput")
-         var rarityField = document.getElementById("Cards_Retumas");
-         var cardId = document.getElementById("cardid");
-         var compareToRarity;
-         if (rarityField.value == "null") {
-             compareToRarity = null
-         }
-         else {
-             compareToRarity =  rarityField.value
-         }
-         var selectedCard = cards.find(x => x.retumas == compareToRarity && x.name == cardInput.value);
-         console.log(selectedCard);
-        var image = document.getElementById("Cards_Image");
-         var level = document.getElementById("Cards_Level");
-         var attack = document.getElementById("Cards_Attack");
-         var defense = document.getElementById("Cards_Defense");
-         image.value = selectedCard.image;
-         level.value = selectedCard.level;
-         attack.value = selectedCard.attack;
-         defense.value = selectedCard.defense;
-         cardid.value = selectedCard.id;
-
            
 
+
         }
 
+    }
+    function createImageForCard(targetImage) {
+        // <div class="view view-cascade">
+        var parentDiv = document.getElementsByClassName("view-cascade")[0];
+        var img = document.createElement('img');
+        img.setAttribute("src", targetImage);
+        img.style.maxHeight = "300px";
+        img.style.maxWidth ="300px"
+        img.classList.add("card-img-top");
+        parentDiv.appendChild(img);
+        
+    }
+
+    function createCardBody(cardName, rarity, level, attack, defense) {
+        var parentDiv = document.getElementsByClassName("card-body")[0];
+        var cardNameElement = document.createElement('h4');
+        var strongElement = document.createElement('strong');
+        var text = document.createTextNode(cardName);
+        strongElement.appendChild(text);
+        cardNameElement.appendChild(strongElement);
+        parentDiv.appendChild(cardNameElement);
+
+        var cardRarityElement = document.createElement('h4');
+        var text = document.createTextNode(rarity);
+        cardRarityElement.appendChild(text);
+        parentDiv.appendChild(cardRarityElement);
+
+         var cardLevelElement = document.createElement('p');
+        var text = document.createTextNode("Level: " + level);
+        cardLevelElement.appendChild(text);
+        parentDiv.appendChild(cardLevelElement);
+
+         var cardAttackElement = document.createElement('p');
+        var text = document.createTextNode("Attack: " + level);
+        cardAttackElement.appendChild(text);
+        parentDiv.appendChild(cardAttackElement);
+
+        var cardDefenseElement = document.createElement('p');
+        var text = document.createTextNode("Defense: " + level);
+        cardDefenseElement.appendChild(text);
+        parentDiv.appendChild(cardDefenseElement);
+
+    }
+    function populateForm() {
+        var cardInput = document.getElementById("cardInput")
+        var rarityField = document.getElementById("Cards_Retumas");
+        var cardId = document.getElementById("cardid");
+        var compareToRarity;
+        if (rarityField.value == "null") {
+            compareToRarity = null
+        }
+        else {
+            compareToRarity = rarityField.value
+        }
+        var selectedCard = cards.find(x => x.retumas == compareToRarity && x.name == cardInput.value);
+
+        createImageForCard(selectedCard.image)
+        createCardBody(selectedCard.name, selectedCard.rarity, selectedCard.level, selectedCard.attack, selectedCard.defense)
+        cardId.value = selectedCard.id;
+
+    }
+
+    function unhideRarity() {
+        var section = document.getElementById("rarityWrapper");
+        section.removeAttribute("hidden");
+    }
+
+    function unhideSectionForm() {
+        var section = document.getElementById("sectionForm");
+        section.removeAttribute("hidden");
+    }
+    function hideHeadingForm() {     
+        var section = document.getElementById("sectionHeading");
+        section.hidden = true;
+    }
 
 
-    /*An array containing all the country names in the world:*/
-       // var countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
 
-        //alert(countries);
-    /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 
 </script>
 
