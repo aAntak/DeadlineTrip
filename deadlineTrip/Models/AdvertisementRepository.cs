@@ -44,5 +44,15 @@ namespace deadlineTrip.Models
             return ads;
         }
 
+        public void InsertRow(Advertisement ad)
+        {
+            _appDbContext.Advertisements.Add(ad);
+            _appDbContext.SaveChanges();
+        }
+
+
+
+        
+
     }
 }

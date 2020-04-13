@@ -32,11 +32,11 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @if (@Context.Session.GetString("username") != null)
                         {
-                        <a class="nav-link" asp-controller="advertisement" asp-action="create"> Create Ad</a>
+                            <a class="nav-link" asp-controller="advertisement" asp-action="create"> Create Ad</a>
                             <a class="nav-link" asp-controller="advertisement" asp-action="list"> Your Ad List</a>
                         }
 
-                        </div>
+                    </div>
                 </li>
                 @if (@Context.Session.GetString("username") != null)
                 {
@@ -71,8 +71,9 @@
     Welcome @Context.Session.GetString("username")
 
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/bootstrap/js/bootstrap.js"></script>
-<script src="~/lib/popper.js/popper.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+   
+    <script src="~/lib/popper.js/popper.min.js"></script>
 </body>
 </html>

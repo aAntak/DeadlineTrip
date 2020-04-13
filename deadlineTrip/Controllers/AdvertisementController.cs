@@ -52,12 +52,18 @@ namespace deadlineTrip.Controllers
         public ActionResult SubmitCreateAction(IFormCollection collection)
         {
             // Get Post Params Here
-            //decimal Price = Convert.ToDecimal(collection["price"]);
-            //int Quantity = Convert.ToInt32(collection["quantity"]);
+            int cardId = Convert.ToInt32(collection["Advertisements.CardId"]);
+            int quantity = Convert.ToInt32(collection["Advertisements.Quantity"]);
+            int price = Convert.ToInt32(collection["Advertisements.Price"]);
+            string accountId = HttpContext.Session.GetString("username");
 
-            // Account id session
-            //public int CardId = 
-// card = _cardRepository.
+
+            Advertisement ad = new Advertisement {Price = price, Quantity = quantity, AccountId = accountId, CardId = cardId };
+
+            _advertisementRepository.InsertRow(ad);
+            //Account id session
+            //public int CardId =
+            // card = _cardRepository.
 
 
             return RedirectToAction("list", "Advertisement");
