@@ -30,9 +30,10 @@
                             <td class="col-sm-1 col-md-1 text-center"><strong>$@item.Advertisements.Price</strong></td>
                             <td class="col-sm-1 col-md-1">
                                 @*<button type="button" class="btn btn-danger">
-            <span class="glyphicon glyphicon-remove"></span> Remove
-        </button>*@
-                            <a class="btn btn-danger" asp-controller="Advertisement" asp-action="Delete" asp-route-id="@item.Advertisements.Id">Remove</a> 
+                                        <span class="glyphicon glyphicon-remove"></span> Remove
+                                    </button>*@
+                                <a href="#" class="btn btn-success" onclick="EditAdvertisement(@item.Advertisements.Id)">Edit</a>
+                                <a class="btn btn-danger" asp-controller="Advertisement" asp-action="Delete" asp-route-id="@item.Advertisements.Id" onclick="return confirm('Are you sure you wish to delete this advertisement?');">Remove</a>
                             </td>
                         </tr>
 
@@ -45,3 +46,31 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Advertisement</h3>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+
+            </div>
+            <div class="modal-body" id="myModalBodyDiv1">
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+    var EditAdvertisement = function (id) {
+        var url = "/Advertisement/EditAdvertisement?id=" + id;
+        $("#myModalBodyDiv1").load(url, function () {
+            $("#myModal1").modal("show");
+        })
+    }
+</script>
+

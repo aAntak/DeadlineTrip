@@ -1,0 +1,79 @@
+﻿@model AdsListViewModel
+<div>
+
+    <form id="myForm">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.HiddenFor(m => m.Advertisements.Id)
+
+        @*@Html.DropDownListFor(model => model., ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
+
+        @*@Html.TextBoxFor(m => m.Advertisements.Price, new { @class = "form-control", @placeholder = "Price" })*@
+        <div class="md-form">
+            <label asp-for="Cards.Name" class="control-label active disabled"></label>
+            <input asp-for="Cards.Name" disabled class="form-control" />
+            <span asp-validation-for="Cards.Name" class="text-danger"></span>
+        </div>
+        <div class="md-form">
+            <label asp-for="Advertisements.Price" class="control-label active"></label>
+            <input asp-for="Advertisements.Price" class="form-control" />
+            <span asp-validation-for="Advertisements.Price" class="text-danger"></span>
+        </div>
+        <div class="md-form">
+            <label asp-for="Advertisements.Quantity" class="control-label active"></label>
+            <input asp-for="Advertisements.Quantity" class="form-control" />
+            <span asp-validation-for="Advertisements.Quantity" class="text-danger"></span>
+        </div>
+        @* @Html.TextBoxFor(m => m.Advertisements.Quantity, new { @class = "form-control", @placeholder = "Quantity" })*@
+
+        <a href="#" id="btnSubmit" class="btn btn-success btn-block">
+            @if (Model.Advertisements.Id > 0)
+            {<span>Update</span> }
+            else
+            {<span>Save</span>}
+        </a>
+
+    </form>
+
+    <div style="text-align:center;display:none" id="loaderDiv">
+        <img src="~/Content/InternetSlowdown_Day.gif" width="150" />
+    </div>
+
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function () {
+
+            $("#loaderDiv").show();
+
+            var myformdata = $("#myForm").serialize();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Advertisement/SubmitEditAction",
+                data: myformdata,
+                success: function () {
+                    $("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/Advertisement/list";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+
+<script src="~/lib/mdbootstrap/js/mdb.min.js"></script>
+<script src="~/lib/popper.js/popper.min.js"></script>

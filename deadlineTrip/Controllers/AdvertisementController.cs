@@ -52,26 +52,61 @@ namespace deadlineTrip.Controllers
         public ActionResult SubmitCreateAction(IFormCollection collection)
         {
             // Get Post Params Here
-            int cardId = Convert.ToInt32(collection["Advertisements.CardId"]);
-            int quantity = Convert.ToInt32(collection["Advertisements.Quantity"]);
-            int price = Convert.ToInt32(collection["Advertisements.Price"]);
-            string accountId = HttpContext.Session.GetString("username");
+            if (ModelState.IsValid)
+            {
+                int cardId = Convert.ToInt32(collection["Advertisements.CardId"]);
+                int quantity = Convert.ToInt32(collection["Advertisements.Quantity"]);
+                decimal price = Convert.ToInt32(collection["Advertisements.Price"]);
+                string accountId = HttpContext.Session.GetString("username");
 
 
-            Advertisement ad = new Advertisement {Price = price, Quantity = quantity, AccountId = accountId, CardId = cardId };
+                Advertisement ad = new Advertisement { Price = price, Quantity = quantity, AccountId = accountId, CardId = cardId };
 
-            _advertisementRepository.InsertRow(ad);
+                _advertisementRepository.InsertRow(ad);
+                return RedirectToAction("list", "Advertisement");
+            }
             //Account id session
             //public int CardId =
             // card = _cardRepository.
 
-
-            return RedirectToAction("list", "Advertisement");
+            return View();
+            
         }
 
         public ActionResult Delete(int id)
         {
             _advertisementRepository.Delete(id);
+
+            return RedirectToAction("list", "Advertisement");
+        }
+
+        public ActionResult EditAdvertisement(int id)
+        {
+            
+           Advertisement ad = _advertisementRepository.GetAdvertisement(id);
+            int cardId = ad.CardId;
+            Card card = _cardRepository.GetCard(cardId);
+            AdsListViewModel result = new AdsListViewModel { Cards = card, Advertisements = ad};
+            return PartialView("Partial2", result);
+        }
+
+        [HttpPost]
+        public ActionResult SubmitEditAction(IFormCollection collection)
+        {
+            // Get Post Params Here
+            //int cardId = Convert.ToInt32(collection["Advertisements.CardId"]);
+            int quantity = Convert.ToInt32(collection["Advertisements.Quantity"]);
+            decimal price = Convert.ToDecimal(collection["Advertisements.Price"]);
+            int id = Convert.ToInt32(collection["Advertisements.Id"]);
+
+
+            //Advertisement ad = new Advertisement { Price = price, Quantity = quantity, AccountId = accountId, CardId = cardId };
+
+            _advertisementRepository.Update(id, quantity, price);
+            //Account id session
+            //public int CardId =
+            // card = _cardRepository.
+
 
             return RedirectToAction("list", "Advertisement");
         }

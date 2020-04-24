@@ -8,6 +8,7 @@ namespace deadlineTrip.ViewModels
 {
     public class AdsListViewModel
     {
+
         public Advertisement Advertisements { get; set; }
         public Card Cards { get; set; }
 

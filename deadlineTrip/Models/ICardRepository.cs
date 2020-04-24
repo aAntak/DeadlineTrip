@@ -9,6 +9,7 @@ namespace deadlineTrip.Models
     {
 
          IEnumerable<Card> getAllCards();
+         Card GetCard(int id);
 
     }
 }

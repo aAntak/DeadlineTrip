@@ -25,6 +25,13 @@ namespace deadlineTrip.Models
                          .ToList());
             // Advertisements.Join(allCards, card => card.CardId, advertise)
         }
+
+        public Card GetCard(int id)
+        {
+            Card card = _appDbContext.Card.SingleOrDefault(x => x.Id == id);
+            return card;
+
+        }
         
 
 

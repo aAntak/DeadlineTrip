@@ -59,7 +59,23 @@ namespace deadlineTrip.Models
 
             _appDbContext.SaveChanges();
 
+        }
+        public Advertisement GetAdvertisement(int id)
+        {
+            Advertisement ad = _appDbContext.Advertisements.SingleOrDefault(x => x.Id == id);
 
+            return ad;
+        }
+
+        public void Update(int id, int quantity, decimal price)
+        {
+            Advertisement ad = GetAdvertisement(id);
+            if (ad != null)
+            {
+                ad.Price = price;
+                ad.Quantity = quantity;
+                _appDbContext.SaveChanges();
+            }
         }
 
 
