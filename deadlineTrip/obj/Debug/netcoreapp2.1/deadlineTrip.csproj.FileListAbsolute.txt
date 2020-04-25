@@ -25,7 +25,6 @@ C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\net
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\deadlineTrip.dll
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\deadlineTrip.pdb
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\deadlineTrip.csproj.CopyComplete
-C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Advertisement\List.g.cshtml.cs
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Account\Index.g.cshtml.cs
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Account\Success.g.cshtml.cs
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
@@ -33,3 +32,5 @@ C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\net
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Advertisement\Create.g.cshtml.cs
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Advertisement\Partial2.g.cshtml.cs
 C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Card\CardDetailsPartial.g.cshtml.cs
+C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Advertisement\userAdList.g.cshtml.cs
+C:\Users\andri\OneDrive\Documents\GitHub\DeadlineTrip\deadlineTrip\obj\Debug\netcoreapp2.1\Razor\Views\Advertisement\List.g.cshtml.cs

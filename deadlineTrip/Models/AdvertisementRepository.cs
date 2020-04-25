@@ -33,7 +33,7 @@ namespace deadlineTrip.Models
         }
 
 
-        public IEnumerable<Advertisement> GetAllAdvertisements()
+        public IEnumerable<Advertisement> GetAllUserAdvertisements()
         {
             var allCards = _appDbContext.Card;
             var ads = Advertisements ??
@@ -41,6 +41,16 @@ namespace deadlineTrip.Models
                        _appDbContext.Advertisements.Where(c => c.AccountId == AccountId)
                            .ToList());
    
+            return ads;
+        }
+
+        public IEnumerable<Advertisement> GetAllAdvertisements()
+        {
+            var ads = Advertisements ??
+                   (Advertisements =
+                       _appDbContext.Advertisements
+                           .ToList());
+
             return ads;
         }
 

@@ -34,8 +34,9 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @if (@Context.Session.GetString("username") != null)
                         {
-                            <a class="nav-link" asp-controller="advertisement" asp-action="create"> Create Ad</a>
-                            <a class="nav-link" asp-controller="advertisement" asp-action="list"> Your Ad List</a>
+                            <a class="nav-link" asp-controller="advertisement" asp-action="list">Search</a>
+                            <a class="nav-link" asp-controller="advertisement" asp-action="create">Create</a>
+                            <a class="nav-link" asp-controller="advertisement" asp-action="userAdList"> Your List</a>
                         }
 
                     </div>

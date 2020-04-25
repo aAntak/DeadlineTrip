@@ -27,10 +27,10 @@ namespace deadlineTrip.Controllers
             _accountRepository = accountRepository;
             _cardRepository = cardRepository;
         }
-        public ViewResult List()
+        public ViewResult userAdList()
         {
 
-            IEnumerable<Advertisement> ads = _advertisementRepository.GetAllAdvertisements();
+            IEnumerable<Advertisement> ads = _advertisementRepository.GetAllUserAdvertisements();
             IEnumerable<Card> cards = _cardRepository.getAllCards();
 
             var results = (from p in cards
@@ -38,6 +38,19 @@ namespace deadlineTrip.Controllers
                            select new AdsListViewModel{ Cards = p, Advertisements = pm });
 
             return View(results);
+        }
+
+        public ViewResult list()
+        {
+
+            IEnumerable<Advertisement> ads = _advertisementRepository.GetAllAdvertisements();
+            IEnumerable<Card> cards = _cardRepository.getAllCards();
+
+            var results = (from p in cards
+                           join pm in ads on p.Id equals pm.CardId
+                           select new AdsListViewModel { Cards = p, Advertisements = pm });
+
+            return View("userAdList", results);
         }
 
         public ViewResult Create()
@@ -62,10 +75,10 @@ namespace deadlineTrip.Controllers
 
                 Advertisement ad = new Advertisement { Price = price, Quantity = quantity, AccountId = accountId, CardId = cardId };
                 _advertisementRepository.InsertRow(ad);
-                TempData["Success"] = "The advertisement has been created";
-                TempData["Error"] = "error";
-                ViewBag.SuccessMessage = "<p>Success!</p>";
-                return RedirectToAction("list", "Advertisement");
+                //TempData["Success"] = "The advertisement has been created";
+                //TempData["Error"] = "error";
+                //ViewBag.SuccessMessage = "<p>Success!</p>";
+                return RedirectToAction("userAdList", "Advertisement");
             }
             //Account id session
             //public int CardId =
@@ -79,7 +92,7 @@ namespace deadlineTrip.Controllers
         {
             _advertisementRepository.Delete(id);
 
-            return RedirectToAction("list", "Advertisement");
+            return RedirectToAction("userAdList", "Advertisement");
         }
 
         public ActionResult EditAdvertisement(int id)
@@ -110,7 +123,7 @@ namespace deadlineTrip.Controllers
             // card = _cardRepository.
 
 
-            return RedirectToAction("list", "Advertisement");
+            return RedirectToAction("userAdList", "Advertisement");
         }
 
 
