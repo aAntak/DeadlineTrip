@@ -61,8 +61,10 @@ namespace deadlineTrip.Controllers
 
 
                 Advertisement ad = new Advertisement { Price = price, Quantity = quantity, AccountId = accountId, CardId = cardId };
-
                 _advertisementRepository.InsertRow(ad);
+                TempData["Success"] = "The advertisement has been created";
+                TempData["Error"] = "error";
+                ViewBag.SuccessMessage = "<p>Success!</p>";
                 return RedirectToAction("list", "Advertisement");
             }
             //Account id session

@@ -31,6 +31,11 @@ namespace deadlineTrip.Controllers
 
             return View(_cardRepository.getAllCards());
         }
+        public ActionResult CardDetails(int id)
+        {
 
+            Card card = _cardRepository.GetCard(id);
+            return PartialView("CardDetailsPartial", card);
+        }
     }
 }
