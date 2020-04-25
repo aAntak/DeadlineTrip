@@ -70,10 +70,19 @@
             </form>
         </div>
     </nav>
- 
+
+    @if (TempData["success"] != null)
+    {
+        <p class="alert alert-success" id="successMessageAddPost">@TempData["success"]</p>
+    }
+    @if (TempData["error"] != null)
+    {
+        <p class="alert" id="failedMessageAddPost">@TempData["error"]</p>
+    }
 
     @RenderBody()
     Welcome @Context.Session.GetString("username")
+
 
 
     <script src="~/lib/jquery/dist/jquery.js"></script>

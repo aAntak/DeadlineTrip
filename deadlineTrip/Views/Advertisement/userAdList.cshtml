@@ -50,7 +50,7 @@
                                 else
                                 {
                                     
-                                    <a href="#" class="btn btn-success btn-sm" onclick="alert(addTocart)"><i class="fas fa-shopping-cart"></i></a>
+                                    <a href="#" class="btn btn-success btn-sm" onclick="addTocart()"><i class="fas fa-shopping-cart"></i></a>
                                 }
                             </td>
                         </tr>
@@ -105,6 +105,11 @@
 </div>
 
 <script>
+    var addTocart = function () {
+        alert("added to cart");
+    }
+
+
     var EditAdvertisement = function (id) {
         var url = "/Advertisement/EditAdvertisement?id=" + id;
         $("#myModalBodyDiv1").load(url, function () {

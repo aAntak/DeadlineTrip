@@ -70,10 +70,7 @@ namespace deadlineTrip
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
-
-           
-
+                 
             app.UseSession();
 
 
@@ -84,7 +81,9 @@ namespace deadlineTrip
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            
+
+            app.UseCookiePolicy();
+
         }
     }
 }

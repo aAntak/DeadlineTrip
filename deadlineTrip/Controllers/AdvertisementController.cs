@@ -36,7 +36,6 @@ namespace deadlineTrip.Controllers
             var results = (from p in cards
                            join pm in ads on p.Id equals pm.CardId
                            select new AdsListViewModel{ Cards = p, Advertisements = pm });
-
             return View(results);
         }
 
@@ -49,7 +48,7 @@ namespace deadlineTrip.Controllers
             var results = (from p in cards
                            join pm in ads on p.Id equals pm.CardId
                            select new AdsListViewModel { Cards = p, Advertisements = pm });
-
+            
             return View("userAdList", results);
         }
 
@@ -75,9 +74,8 @@ namespace deadlineTrip.Controllers
 
                 Advertisement ad = new Advertisement { Price = price, Quantity = quantity, AccountId = accountId, CardId = cardId };
                 _advertisementRepository.InsertRow(ad);
-                //TempData["Success"] = "The advertisement has been created";
-                //TempData["Error"] = "error";
-                //ViewBag.SuccessMessage = "<p>Success!</p>";
+
+                TempData["success"] = "Advertisement has been added succesfully";
                 return RedirectToAction("userAdList", "Advertisement");
             }
             //Account id session
@@ -91,7 +89,7 @@ namespace deadlineTrip.Controllers
         public ActionResult Delete(int id)
         {
             _advertisementRepository.Delete(id);
-
+            TempData["success"] = "Advertisement has been deleted succesfully";
             return RedirectToAction("userAdList", "Advertisement");
         }
 
@@ -108,21 +106,17 @@ namespace deadlineTrip.Controllers
         [HttpPost]
         public ActionResult SubmitEditAction(IFormCollection collection)
         {
-            // Get Post Params Here
-            //int cardId = Convert.ToInt32(collection["Advertisements.CardId"]);
+
             int quantity = Convert.ToInt32(collection["Advertisements.Quantity"]);
             decimal price = Convert.ToDecimal(collection["Advertisements.Price"]);
             int id = Convert.ToInt32(collection["Advertisements.Id"]);
 
 
-            //Advertisement ad = new Advertisement { Price = price, Quantity = quantity, AccountId = accountId, CardId = cardId };
 
             _advertisementRepository.Update(id, quantity, price);
-            //Account id session
-            //public int CardId =
-            // card = _cardRepository.
 
 
+            TempData["success"] = "Advertisement has been edited succesfully";
             return RedirectToAction("userAdList", "Advertisement");
         }
 
