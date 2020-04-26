@@ -41,17 +41,18 @@
                             <td class="col-sm-1 col-md-1 text-center"><strong>@item.Advertisements.Quantity</strong></td>
                             <td class="col-sm-1 col-md-1 text-center"><strong>$@item.Advertisements.Price</strong></td>
                             <td class="col-sm-3 col-md-3">
+
+                                <a href="#" class="btn btn-info btn-sm" onclick="CardDetails(@item.Advertisements.Id)"><i class="fas fa-info"></i></a>
                                 @if (@item.Advertisements.AccountId == @Context.Session.GetString("username"))
                                 {
-                                    <a href="#" class="btn btn-info btn-sm" onclick="CardDetails(@item.Cards.Id)"><i class="fas fa-info"></i></a>
                                     <a href="#" class="btn btn-success btn-sm" onclick="EditAdvertisement(@item.Advertisements.Id)"><i class="fas fa-edit"></i></a>
                                     <a class="btn btn-danger btn-sm" asp-controller="Advertisement" asp-action="Delete" asp-route-id="@item.Advertisements.Id" onclick="return confirm('Are you sure you wish to delete this advertisement?');"><i class="fas fa-trash"></i></a>
                                 }
-                                else
+                                @*else
                                 {
-                                    
+
                                     <a href="#" class="btn btn-success btn-sm" onclick="addTocart()"><i class="fas fa-shopping-cart"></i></a>
-                                }
+                                }*@
                             </td>
                         </tr>
 
@@ -118,7 +119,7 @@
     }
 
     var CardDetails = function (id) {
-        var url = "/Card/CardDetails?id=" + id;
+        var url = "/Advertisement/AdvertisementDetails?id=" + id;
         $("#myModalBodyDiv2").load(url, function () {
             $("#myModal2").modal("show");
         })

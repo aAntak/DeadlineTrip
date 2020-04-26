@@ -1,0 +1,54 @@
+﻿@model AdsListViewModel
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Http;
+    <div id="sectionForm">
+
+        <div class="row flex-center">
+
+
+            <!--Card-->
+            <div>
+
+                <!--Card image-->
+                <div class="view view-cascade">
+                    <img style="margin:auto; width:200px; height:250px" src="@Model.Cards.Image" class="card-img-top" />
+                </div>
+                <!--/.Card image-->
+                <!--Card content-->
+
+                <div class="card-body card-body-cascade text-center ">
+
+                    <h4><strong>@Model.Cards.Name</strong></h4>
+                    <h4>Retumas: @Model.Cards.Retumas</h4>
+                    <p>Level: @Model.Cards.Level</p>
+                    <p>Attack: @Model.Cards.Attack</p>
+                    <p>Defense: @Model.Cards.Defense</p>
+                    <div class="md-form">
+                        <label asp-for="Advertisements.Price" class="control-label active disabled"></label>
+                        <input asp-for="Advertisements.Price" disabled class="form-control" />
+                        <span asp-validation-for="Advertisements.Price" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--/.Card-->
+
+        </div>
+
+   
+        <div class="flex-center">
+            @if (Model.Advertisements.AccountId == @Context.Session.GetString("username"))
+            {
+                <button type="submit" class="btn btn-primary">Calculate market price</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-success">Add To Cart</button>
+            }
+        </div>
+    </div>
+
+
+

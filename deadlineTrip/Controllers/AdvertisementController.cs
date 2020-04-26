@@ -96,7 +96,7 @@ namespace deadlineTrip.Controllers
         public ActionResult EditAdvertisement(int id)
         {
             
-           Advertisement ad = _advertisementRepository.GetAdvertisement(id);
+            Advertisement ad = _advertisementRepository.GetAdvertisement(id);
             int cardId = ad.CardId;
             Card card = _cardRepository.GetCard(cardId);
             AdsListViewModel result = new AdsListViewModel { Cards = card, Advertisements = ad};
@@ -118,6 +118,16 @@ namespace deadlineTrip.Controllers
 
             TempData["success"] = "Advertisement has been edited succesfully";
             return RedirectToAction("userAdList", "Advertisement");
+        }
+
+        public ActionResult AdvertisementDetails(int id)
+        {
+            Advertisement ad = _advertisementRepository.GetAdvertisement(id);
+            int cardId = ad.CardId;
+            Card card = _cardRepository.GetCard(cardId);
+            AdsListViewModel result = new AdsListViewModel { Cards = card, Advertisements = ad };
+
+            return PartialView("CardDetailsPartial", result);
         }
 
 
