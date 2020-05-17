@@ -20,6 +20,8 @@ namespace deadlineTrip.Models
         public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Card> Card { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -39,13 +41,18 @@ namespace deadlineTrip.Models
             modelBuilder.Entity<Advertisement>().HasData(new Advertisement { Id = 2, Price = 52, Quantity = 46, AccountId = "Pirmas@gmail.com", CardId = 2 });
             modelBuilder.Entity<Advertisement>().HasData(new Advertisement { Id = 3, Price = 14, Quantity = 46, AccountId = "Trecias@gmail.com", CardId = 3 });
 
-            modelBuilder.Entity<Account>().HasData(new Account { Id = "Pirmas@gmail.com", Name = "Pirmas", LastName = "Pirmaitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) });
-            modelBuilder.Entity<Account>().HasData(new Account { Id = "Antras@gmail.com", Name = "Antras", LastName = "Antraitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) });
-            modelBuilder.Entity<Account>().HasData(new Account { Id = "Trecias@gmail.com", Name = "Trecias", LastName = "Trecaitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) });
+            Account First = new Account { Id = "Pirmas@gmail.com", Name = "Pirmas", LastName = "Pirmaitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) };
+            Account Second = new Account { Id = "Antras@gmail.com", Name = "Antras", LastName = "Antraitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) };
+            Account Third = new Account { Id = "Trecias@gmail.com", Name = "Trecias", LastName = "Trecaitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) };
+
+            modelBuilder.Entity<Account>().HasData(First);
+            modelBuilder.Entity<Account>().HasData(Second);
+            modelBuilder.Entity<Account>().HasData(Third);
+
 
         }
 
-            
+
 
 
     }

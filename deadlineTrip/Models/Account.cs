@@ -13,7 +13,6 @@ namespace deadlineTrip.Models
         public string LastName { get; set; }
         public string Password { get; set; }
         public DateTime BirthDate { get; set; }
-
         public List<Advertisement> Advertisements { get; set; }
 
     }

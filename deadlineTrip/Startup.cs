@@ -36,6 +36,7 @@ namespace deadlineTrip
             services.AddScoped<IAdvertisementRepository, AdvertisementRepository>(sp => AdvertisementRepository.GetUser(sp));
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ICardRepository, CardRepository>();
+            services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             //services.AddScoped<AdvertisementRepository>(sp => AdvertisementRepository.GetUser(sp));
 
             services.AddDbContext<AppDbContext>(options =>
