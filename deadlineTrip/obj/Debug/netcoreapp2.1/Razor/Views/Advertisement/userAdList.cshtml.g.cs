@@ -226,7 +226,7 @@ WriteAttributeValue("", 2650, item.Advertisements.Id, 2650, 23, false);
             WriteLiteral("><i class=\"fas fa-edit\"></i></a>\r\n                                    ");
             EndContext();
             BeginContext(2745, 236, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e871798c283c4f3a982fef7354a53777", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd6e2d7d5e54499e9a9b7f591ea36830", async() => {
                 BeginContext(2949, 28, true);
                 WriteLiteral("<i class=\"fas fa-trash\"></i>");
                 EndContext();
