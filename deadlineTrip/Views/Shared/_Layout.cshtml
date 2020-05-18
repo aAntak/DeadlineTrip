@@ -80,7 +80,7 @@
     }
     @if (TempData["error"] != null)
     {
-        <p class="alert" id="failedMessageAddPost">@TempData["error"]</p>
+        <p class="alert alert-danger" id="failedMessageAddPost">@TempData["error"]</p>
     }
 
     @RenderBody()

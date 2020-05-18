@@ -13,7 +13,6 @@ namespace deadlineTrip.Models
 
         public int ShoppingCartId { get; set; }
 
-
         public Account account { get; set; }
 
         

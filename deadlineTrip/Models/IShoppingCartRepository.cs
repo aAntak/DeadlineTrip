@@ -12,5 +12,7 @@ namespace deadlineTrip.Models
         List<ShoppingCartItem> shoppingCartListItems { get; set; }
         IEnumerable<ShoppingCartItem> GetShoppingCartItems(int cartId);
         void Delete(int id);
+        ShoppingCartItem GetItem(int id);
+        void ClearCart(ShoppingCart cart);
     }
 }
