@@ -42,7 +42,7 @@
                             <td class="col-sm-1 col-md-1 text-center"><strong>$@item.Advertisements.Price</strong></td>
                             <td class="col-sm-3 col-md-3">
 
-                                <a href="#" class="btn btn-info btn-sm" onclick="CardDetails(@item.Advertisements.Id)"><i class="fas fa-info"></i></a>
+                                <a href="#" class="btn btn-info btn-sm" id="cardDetails_@item.Advertisements.Id" onclick="CardDetails(@item.Advertisements.Id)"><i class="fas fa-info"></i></a>
                                 @if (@item.Advertisements.AccountId == @Context.Session.GetString("username"))
                                 {
                                     <a href="#" class="btn btn-success btn-sm" onclick="EditAdvertisement(@item.Advertisements.Id)"><i class="fas fa-edit"></i></a>
@@ -57,9 +57,6 @@
                         </tr>
 
                     }
-
-
-
                 </tbody>
             </table>
         </div>
@@ -71,18 +68,11 @@
             <div class="modal-header">
                 <h3 class="modal-title">Edit Advertisement</h3>
                 <a href="#" class="close" data-dismiss="modal">&times;</a>
-
             </div>
             <div class="modal-body" id="myModalBodyDiv1">
-
-
             </div>
-
-
         </div>
-
     </div>
-
 </div>
 
 <div class="modal fade" id="myModal2">
@@ -102,8 +92,27 @@
         </div>
 
     </div>
-
 </div>
+
+<div class="modal fade" id="myModal3">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center">Market Price</h3>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+
+            </div>
+            <div class="modal-body" id="myModalBodyDiv3">
+                <div id="marketPriceText">
+
+                </div>
+                <button onclick="approvePrice()" id="marketPriceApprove" type="button" class="btn btn-success">Approve price</button>
+                <button onclick="cancelPrice()" type="button" class="btn btn-warning">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     var addTocart = function () {
@@ -122,7 +131,61 @@
         var url = "/Advertisement/AdvertisementDetails?id=" + id;
         $("#myModalBodyDiv2").load(url, function () {
             $("#myModal2").modal("show");
+            if (approved) {
+                $("#success").removeAttr('hidden')
+                approved = false
+            }
         })
+    }
+
+    var xmlhttp;
+    let marketPrice;
+    let adId;
+    let approved = false
+
+    if (window.ActiveXObject) {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    } else {
+        xmlhttp = new XMLHttpRequest();
+    }
+
+    var GetMarketPrice = function (cardId, adverId) {
+        xmlhttp.open("GET", "/Advertisement/GetMarketPrice?cardId=" + cardId, true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var price = Number(xmlhttp.response).toFixed(2)
+                if (!isNaN(price)) {
+                    $("#marketPriceText").text("Market price for this card is: " + price + "€")
+                    marketPrice = price
+                    adId = adverId
+                } else {
+                    $("#marketPriceText").text("Market price was not found.")
+                    $("#marketPriceApprove").hide(true)
+                }
+                $("#myModal2").modal("hide");
+                $("#myModal3").modal("show");
+            }
+        }
+
+    }
+
+    var approvePrice = function () {
+        xmlhttp.open("POST", "/Advertisement/ApproveMarketPrice?price=" + marketPrice + "&advertisement=" + adId, true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                $("#myModal3").modal("hide");
+                $("#success").removeAttr('hidden')
+                approved = true
+                $("#cardDetails_" + adId)[0].click()
+            }
+        }
+    }
+
+    var cancelPrice = function () {
+         $("#myModal3").modal("hide");
+         $("#myModal2").modal("show");
     }
 </script>
 

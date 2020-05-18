@@ -2,9 +2,7 @@
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Http;
     <div id="sectionForm">
-
         <div class="row flex-center">
-
 
             <!--Card-->
             <div>
@@ -37,18 +35,31 @@
 
         </div>
 
-   
+        <div hidden id="success" class="alert alert-success" role="alert">
+            Successfully updated price
+        </div>
         <div class="flex-center">
             @if (Model.Advertisements.AccountId == @Context.Session.GetString("username"))
             {
-                <button type="submit" class="btn btn-primary">Calculate market price</button>
+
+                <button onclick="GetMarketPrice(@Model.Cards.Id, @Model.Advertisements.Id)" type="submit" class="btn btn-primary">Calculate market price</button>
+
             }
             else
             {
                 <a class="btn btn-success" href="/ShoppingCart/AddToCart/id?=@Model.Advertisements.Id">Add To Cart</a>
             }
         </div>
+        <div class="modal fade" id="myModal1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Edit Advertisement</h3>
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    </div>
+                    <div class="modal-body" id="myModalBodyDiv1">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-

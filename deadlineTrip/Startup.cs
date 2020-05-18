@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using deadlineTrip.Models;
+using deadlineTrip.Models.APIs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,6 +39,7 @@ namespace deadlineTrip
             services.AddScoped<ICardRepository, CardRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             //services.AddScoped<AdvertisementRepository>(sp => AdvertisementRepository.GetUser(sp));
+            services.AddScoped<ICardSystemAPI, CardSystemAPI>();
 
             services.AddDbContext<AppDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

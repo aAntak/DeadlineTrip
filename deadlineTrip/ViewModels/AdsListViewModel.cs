@@ -12,5 +12,7 @@ namespace deadlineTrip.ViewModels
         public Advertisement Advertisements { get; set; }
         public Card Cards { get; set; }
 
+        public double? MarketPrice { get; set; }
+
     }
 }

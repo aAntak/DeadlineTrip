@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using deadlineTrip.Models;
+using deadlineTrip.Models.APIs;
 using deadlineTrip.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +18,21 @@ namespace deadlineTrip.Controllers
         private readonly IAdvertisementRepository _advertisementRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly ICardRepository _cardRepository;
+        private readonly ICardSystemAPI _cardsAPI;
+
 
         //  AddScope injects repositories into controller
         //when class requires these types they will be injected auto
         // by the built-in dependecy injection system
-        public AdvertisementController(IAdvertisementRepository advertisementRepository, IAccountRepository accountRepository, ICardRepository cardRepository)
+        public AdvertisementController(IAdvertisementRepository advertisementRepository,
+                                       IAccountRepository accountRepository,
+                                       ICardRepository cardRepository,
+                                       ICardSystemAPI cardsAPI)
         {
             _advertisementRepository = advertisementRepository;
             _accountRepository = accountRepository;
             _cardRepository = cardRepository;
+            _cardsAPI = cardsAPI;
         }
         public ViewResult userAdList()
         {
@@ -120,17 +127,29 @@ namespace deadlineTrip.Controllers
             return RedirectToAction("userAdList", "Advertisement");
         }
 
-        public ActionResult AdvertisementDetails(int id)
+        public ActionResult AdvertisementDetails(int id, double? marketPrice = null)
         {
             Advertisement ad = _advertisementRepository.GetAdvertisement(id);
             int cardId = ad.CardId;
             Card card = _cardRepository.GetCard(cardId);
-            AdsListViewModel result = new AdsListViewModel { Cards = card, Advertisements = ad };
+            AdsListViewModel result = new AdsListViewModel { Cards = card, Advertisements = ad, MarketPrice = marketPrice };
 
             return PartialView("CardDetailsPartial", result);
         }
 
+        public async Task<ActionResult> GetMarketPrice(int cardId, int adId)
+        {
+            var card = _cardRepository.GetCard(cardId);
+            var marketPrice = await _cardsAPI.GetMarketPrice(card.Name);
 
+            return Json(marketPrice);
+        }
+        public ActionResult ApproveMarketPrice(decimal price, int advertisement)
+        {
+            var ad = _advertisementRepository.GetAdvertisement(advertisement);
+            _advertisementRepository.Update(ad.Id, ad.Quantity, price);
+            return Ok();
+        }
 
     }
 }
