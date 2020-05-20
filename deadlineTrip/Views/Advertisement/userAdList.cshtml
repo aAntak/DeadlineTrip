@@ -114,6 +114,54 @@
 </div>
 
 
+<<<<<<< Updated upstream
+=======
+<div class="modal fade" id="auctionModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create auction</h3>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+            </div>
+            <div class="modal-body" id="auctionModalBody">
+                <div id="createAuctionError1" hidden class="alert alert-danger" role="alert">
+                    Wrong data!
+                </div>
+                <div id="createAuctionError2" hidden class="alert alert-danger" role="alert">
+                    End date cannot be in the past!
+                </div>
+                <div class="input-group input-group-sm mb-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Starting Price</span>
+                    </div>
+                    <input id="startingPrice" type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-1 mt-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Buy now price</span>
+                    </div>
+                    <input id="buyNow" type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-1 mt-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">End date</span>
+                    </div>
+                    <input id="endDate" type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-1 mt-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">End time</span>
+                    </div>
+                    <input id="endTime" type="time" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="15:00">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button onclick="SubmitCreateAction()" type="button" class="btn btn-success">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     var addTocart = function () {
         alert("added to cart");
@@ -187,5 +235,100 @@
          $("#myModal3").modal("hide");
          $("#myModal2").modal("show");
     }
+
+
+    var OpenAuctionForm = function (ad) {
+        adId = ad
+        $("#myModal2").modal("hide");
+        $('#auctionModal').on('hidden.bs.modal', function () {
+            $('#startingPrice').val('')
+            $('#buyNow').val('')
+            $('#endDate').val(new Date().toISOString().slice(0, 10))
+            $('#endTime').val('15:00')
+            $('#createAuctionError1').attr("hidden", true);
+            $('#createAuctionError2').attr("hidden", true);
+            $("#myModal2").modal("show");
+        });
+        $('#endDate').val(new Date().toISOString().slice(0, 10))
+        $("#auctionModal").modal("show");
+    }
+
+    var SubmitCreateAction = function () {
+        $('#createAuctionError1').attr("hidden", true);
+        $('#createAuctionError2').attr("hidden", true);
+
+        if (!validateAuctionInput()) {
+            $('#createAuctionError1').attr("hidden", false);
+            return;
+        }
+
+        if (checkIfPast()) {
+            $('#createAuctionError2').attr("hidden", false);
+            return;
+        }
+
+        var xhr ;
+        if (window.ActiveXObject) {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        } else {
+            xhr = new XMLHttpRequest();
+        }
+        var endDate = $('#endDate').val() + " " + $('#endTime').val()
+        xhr.open("POST", "/Auction/SubmitCreateAction", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(
+            JSON.stringify({
+                "StartingPrice": $('#startingPrice').val(),
+                "BuyNowPrice": $('#buyNow').val(),
+                "EndDate": endDate,
+                "AdvertisementId": adId
+                                }));
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                auctionCreated = true;
+                $("#auctionModal").modal("hide");
+                $("#cardDetails_" + adId)[0].click()
+            }
+        }
+
+    }
+
+    function validateAuctionInput() {
+        let startingPrice = $('#startingPrice').val()
+        let buyNowPrice = $('#buyNow').val()
+        let endDate = $('#endDate').val()
+        let endTime = $('#endTime').val()
+
+        let PriceRegex = /[1-9]\d*(?:\.\d{0,2})?/
+        let timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/
+
+        if (!PriceRegex.test(startingPrice.toString()))
+            return false
+
+        if (!PriceRegex.test(buyNowPrice.toString()))
+            return false
+
+        if(!(isNaN(endDate) && !isNaN(Date.parse(endDate))))
+            return false;
+
+        if (!timeRegex.test(endTime))
+            return false
+
+        return true;
+    }
+
+    function checkIfPast() {
+        let endDate = $('#endDate').val()
+        let endTime = $('#endTime').val()
+
+        let date = endDate + " " + endTime;
+
+        if (Date.parse(date) - Date.parse(new Date()) < 0) {
+            return true
+        }
+
+        return false;
+    }
+
 </script>
 
