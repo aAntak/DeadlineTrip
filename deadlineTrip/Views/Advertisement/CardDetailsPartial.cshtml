@@ -6,7 +6,9 @@
 
             <!--Card-->
             <div>
-
+                <div hidden id="auctionSuccess" class="alert alert-success" role="alert">
+                    The auction has been successfully started
+                </div>
                 <!--Card image-->
                 <div class="view view-cascade">
                     <img style="margin:auto; width:200px; height:250px" src="@Model.Cards.Image" class="card-img-top" />
@@ -43,23 +45,17 @@
             {
 
                 <button onclick="GetMarketPrice(@Model.Cards.Id, @Model.Advertisements.Id)" type="submit" class="btn btn-primary">Calculate market price</button>
-
+                if (Model.ifInAuction == false)
+                {
+                    <button onclick="OpenAuctionForm(@Model.Advertisements.Id)" type="submit" class="btn btn-warning">Start auction</button>
+                }
+                else
+                {
+                    <button disabled type="submit" class="btn btn-cyan">Card is in auction</button>
+                }
             }
             else
             {
                 <a class="btn btn-success" href="/ShoppingCart/AddToCart/id?=@Model.Advertisements.Id">Add To Cart</a>
             }
         </div>
-        <div class="modal fade" id="myModal1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title">Edit Advertisement</h3>
-                        <a href="#" class="close" data-dismiss="modal">&times;</a>
-                    </div>
-                    <div class="modal-body" id="myModalBodyDiv1">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
