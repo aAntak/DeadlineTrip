@@ -19,6 +19,7 @@ namespace deadlineTrip.Controllers
         private readonly IAccountRepository _accountRepository;
         private readonly ICardRepository _cardRepository;
         private readonly ICardSystemAPI _cardsAPI;
+        private readonly IAuctionRepository _auctionRepo;
 
 
         //  AddScope injects repositories into controller
@@ -27,12 +28,14 @@ namespace deadlineTrip.Controllers
         public AdvertisementController(IAdvertisementRepository advertisementRepository,
                                        IAccountRepository accountRepository,
                                        ICardRepository cardRepository,
-                                       ICardSystemAPI cardsAPI)
+                                       ICardSystemAPI cardsAPI,
+                                       IAuctionRepository auctionRepo)
         {
             _advertisementRepository = advertisementRepository;
             _accountRepository = accountRepository;
             _cardRepository = cardRepository;
             _cardsAPI = cardsAPI;
+            _auctionRepo = auctionRepo;
         }
         public ViewResult userAdList()
         {
@@ -132,7 +135,8 @@ namespace deadlineTrip.Controllers
             Advertisement ad = _advertisementRepository.GetAdvertisement(id);
             int cardId = ad.CardId;
             Card card = _cardRepository.GetCard(cardId);
-            AdsListViewModel result = new AdsListViewModel { Cards = card, Advertisements = ad, MarketPrice = marketPrice };
+
+            AdsListViewModel result = new AdsListViewModel { Cards = card, Advertisements = ad, MarketPrice = marketPrice, ifInAuction = ad.Auction == null ? false : true };
 
             return PartialView("CardDetailsPartial", result);
         }
