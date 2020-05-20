@@ -22,6 +22,8 @@ namespace deadlineTrip.Models
         public DbSet<Card> Card { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
+
+        public DbSet<Auction> Auctions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -49,6 +51,10 @@ namespace deadlineTrip.Models
             modelBuilder.Entity<Account>().HasData(Second);
             modelBuilder.Entity<Account>().HasData(Third);
 
+            modelBuilder.Entity<Advertisement>().
+                HasOne(x => x.Auction).
+                WithOne(x => x.Advertisement).
+                HasForeignKey<Auction>(x => x.AdvertisementId);
 
         }
 

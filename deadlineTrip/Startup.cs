@@ -40,7 +40,8 @@ namespace deadlineTrip
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             //services.AddScoped<AdvertisementRepository>(sp => AdvertisementRepository.GetUser(sp));
             services.AddScoped<ICardSystemAPI, CardSystemAPI>();
-
+            services.AddScoped<IAuctionRepository, AuctionRepository>();
+            
             services.AddDbContext<AppDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
