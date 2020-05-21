@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace deadlineTrip.Models
            ShoppingCart cart =  _appDbContext.ShoppingCart.FirstOrDefault(x => x.account.Id == userId);
            return cart;
         }
-        public IEnumerable<ShoppingCartItem> GetShoppingCartItems(int cartId)
+        public IEnumerable<ShoppingCartItem> GetShoppingCartListItems(int cartId)
         {
             var allCards = _appDbContext.Card;
             var items = shoppingCartListItems ??
@@ -31,6 +32,11 @@ namespace deadlineTrip.Models
                            .ToList());
 
             return items;
+        }
+        public ShoppingCartItem GetItem(int id)
+        {
+            ShoppingCartItem item = _appDbContext.ShoppingCartItem.FirstOrDefault(x => x.ShoppingCartItemId == id);
+            return item;
         }
         
         public void AddToCart(Advertisement ad, ShoppingCart ShoppingCartId)
@@ -62,8 +68,33 @@ namespace deadlineTrip.Models
         {
 
             ShoppingCartItem ad = _appDbContext.ShoppingCartItem.Find(id);
-
             _appDbContext.Remove(ad);
+
+            _appDbContext.SaveChanges();
+
+        }
+        public void ClearCart(ShoppingCart cart)
+        {
+            int cartId = cart.ShoppingCartId;
+            //var ads = _appDbContext.Advertisements;
+ 
+            shoppingCartListItems = _appDbContext
+            .ShoppingCartItem.Where(x => x.ShoppingCartId.ShoppingCartId == cart.ShoppingCartId).Include(ad => ad.ad).ToList();
+           
+
+            foreach (var item in shoppingCartListItems)
+            {
+                if(item.ad.Quantity > item.quantity)
+                {
+                    item.ad.Quantity -= item.quantity;
+                }
+                else
+                {
+                    _appDbContext.Remove(item.ad);
+                }
+            }
+
+            _appDbContext.ShoppingCartItem.RemoveRange(shoppingCartListItems);
 
             _appDbContext.SaveChanges();
 

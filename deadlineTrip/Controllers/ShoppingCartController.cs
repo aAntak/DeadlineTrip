@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+//using deadlineTrip.Migrations;
 using deadlineTrip.Models;
+using deadlineTrip.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,7 +34,7 @@ namespace deadlineTrip.Controllers
             string accountId = HttpContext.Session.GetString("username"); //session
             ShoppingCart cart = _shoppingCartRepository.GetShoppingCart(accountId);
             
-            IEnumerable<ShoppingCartItem> items = _shoppingCartRepository.GetShoppingCartItems(cart.ShoppingCartId);
+            IEnumerable<ShoppingCartItem> items = _shoppingCartRepository.GetShoppingCartListItems(cart.ShoppingCartId);
             IEnumerable<Advertisement> ads = _advertisementRepository.GetAllAdvertisements();
             IEnumerable<Card> cards = _cardRepository.getAllCards();
 
@@ -57,6 +62,27 @@ namespace deadlineTrip.Controllers
             TempData["success"] = "Item has been deleted succesfully";
             return RedirectToAction("Index");
         }
+
+        public ActionResult CheckOut()
+        {
+            string accountId = HttpContext.Session.GetString("username"); //session
+            ShoppingCart cart = _shoppingCartRepository.GetShoppingCart(accountId);
+            IEnumerable<ShoppingCartItem> items = _shoppingCartRepository.GetShoppingCartListItems(cart.ShoppingCartId);
+            IEnumerable<Advertisement> ad = _advertisementRepository.GetAllAdvertisements();
+            decimal sum = 0;
+            foreach(ShoppingCartItem item in items)
+            {
+                sum += (item.ad.Price * item.quantity);
+            }
+
+            ShoppingCartViewModel result = new ShoppingCartViewModel { ShoppingCart = cart, ShoppingCartTotal = sum };
+
+
+            return PartialView("~/Views/Payment/Index.cshtml", result);
+        }
+
+       
+
 
     }
 }

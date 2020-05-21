@@ -10,7 +10,9 @@ namespace deadlineTrip.Models
         void AddToCart(Advertisement ad, ShoppingCart ShoppingCartId);
         ShoppingCart GetShoppingCart(string userId);
         List<ShoppingCartItem> shoppingCartListItems { get; set; }
-        IEnumerable<ShoppingCartItem> GetShoppingCartItems(int cartId);
+        IEnumerable<ShoppingCartItem> GetShoppingCartListItems(int cartId);
         void Delete(int id);
+        ShoppingCartItem GetItem(int id);
+        void ClearCart(ShoppingCart cart);
     }
 }

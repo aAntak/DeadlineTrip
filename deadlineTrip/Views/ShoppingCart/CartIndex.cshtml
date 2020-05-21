@@ -1,82 +1,152 @@
 ﻿@model IEnumerable<ShoppingCartItem>
 
-<div class="card">
-    <div class="card-body">
 
-        <!-- Shopping Cart table -->
-        <div class="table-responsive">
+@if (@Model.Count() > 0)
+{
+    <div class="card">
+        <div class="card-body">
 
-            <table class="table product-table">
+            <!-- Shopping Cart table -->
+            <div class="table-responsive">
 
-                <!-- Table head -->
-                <thead class="mdb-color lighten-5">
-                    <tr>
-                        <th></th>
-                        <th class="font-weight-bold">
-                            <strong>Product</strong>
-                        </th>
-                        <th class="font-weight-bold">
-                            <strong></strong>
-                        </th>
-                        <th></th>
-                        <th class="font-weight-bold">
-                            <strong>Price</strong>
-                        </th>
-                        <th class="font-weight-bold">
-                            <strong>QTY</strong>
-                        </th>
-                        <th class="font-weight-bold">
-                            <strong>Amount</strong>
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <!-- /.Table head -->
-                <!-- Table body -->
-                <tbody>
+                <table class="table product-table">
 
-                    <!-- First row -->
-                    @foreach (var item in Model)
-                    {
+                    <!-- Table head -->
+                    <thead class="mdb-color lighten-5">
                         <tr>
-                            <th scope="row">
-                                <img src="@item.ad.Card.Image" alt="" class="img-fluid z-depth-0" style="width: 80px; height:120[x;">
+                            <th></th>
+                            <th class="font-weight-bold">
+                                <strong>Product</strong>
                             </th>
-                            <td>
-                                <h5 class="mt-3">
-                                    <strong>@item.ad.Card.Name </strong>
-                                </h5>
-                                <h5 class="media-heading"><a href="#">Level: @item.ad.Card.Level</a></h5>
-                                <span>Retumas: </span><span class="text-success"><strong>@item.ad.Card.Retumas</strong></span>
-                                 <p> Seller: @item.ad.AccountId </p>
-                            </td>
-                            <td>@item.quantity</td>
-                            <td></td>
-                            <td>@item.ad.Price</td>
-                            <td>
-                                <input type="number" value="@item.quantity" aria-label="Search" class="form-control" style="width: 100px">
-                            </td>
-                            <td class="font-weight-bold">
-                                <strong> @((item.ad.Price * @item.quantity).ToString("c"))</strong>
-                            </td>
-                            <td>
-                                <a class="btn btn-danger btn-sm" asp-controller="ShoppingCart" asp-action="Delete" asp-route-id="@item.ShoppingCartItemId" onclick="return confirm('Are you sure you wish to delete this item from your cart?');"><i class="fas fa-trash"></i></a>
-
-                            </td>
+                            <th class="font-weight-bold">
+                                <strong></strong>
+                            </th>
+                            <th></th>
+                            <th class="font-weight-bold">
+                                <strong>Price</strong>
+                            </th>
+                            <th class="font-weight-bold">
+                                <strong>QTY</strong>
+                            </th>
+                            <th class="font-weight-bold">
+                                <strong>Amount</strong>
+                            </th>
+                            <th></th>
                         </tr>
-                        <!-- /.First row -->
-                        <!-- Second row -->
-                    }
-                       
+                    </thead>
+                    <!-- /.Table head -->
+                    <!-- Table body -->
+                    <tbody>
+
+                        <!-- First row -->
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row">
+                                    <img src="@item.ad.Card.Image" alt="" class="img-fluid z-depth-0" style="width: 80px; height:120px;">
+                                </th>
+                                <td>
+                                    <h5 class="mt-3">
+                                        <strong>@item.ad.Card.Name </strong>
+                                    </h5>
+                                    <h5 class="media-heading"><a href="#">Level: @item.ad.Card.Level</a></h5>
+                                    <span>Retumas: </span><span class="text-success"><strong>@item.ad.Card.Retumas</strong></span>
+                                    <p> Seller: @item.ad.AccountId </p>
+                                </td>
+                                <td>@item.quantity</td>
+                                <td></td>
+                                <td>@item.ad.Price</td>
+                                <td>
+                                    <input type="number" value="@item.quantity" aria-label="Search" class="form-control" style="width: 100px">
+                                </td>
+                                <td class="font-weight-bold">
+                                    <strong> @((item.ad.Price * @item.quantity).ToString("c"))</strong>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" asp-controller="ShoppingCart" asp-action="Delete" asp-route-id="@item.ShoppingCartItemId" onclick="return confirm('Are you sure you wish to delete this item from your cart?');"><i class="fas fa-trash"></i></a>
+
+                                </td>
+                            </tr>
+                            <!-- /.First row -->
+                            <!-- Second row -->
+                        }
+
 
                     </tbody>
-                <!-- /.Table body -->
+                    <!-- /.Table body -->
+                </table>
+                <div class="text-right">
+                    <a class="btn btn-primary btn-sm" asp-controller="Advertisement" asp-action="list">Go Back to shopping</a>
+                    <a class="btn btn-success btn-sm" onclick="CheckOut()">Checkout</a>
+                </div>
 
-            </table>
+            </div>
+            <!-- /.Shopping Cart table -->
 
         </div>
-        <!-- /.Shopping Cart table -->
+
+    </div>
+}
+else
+{
+    <p> Your shopping cart list is empty</p>
+    <a class="btn btn-primary btn-sm" asp-controller="Advertisement" asp-action="list">Go Back to shopping</a>
+}
+
+<div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Payment overview</h3>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+
+            </div>
+            <div class="modal-body" id="myModalBodyDiv1">
+
+
+            </div>
+
+
+        </div>
 
     </div>
 
 </div>
+
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center">Payment details</h3>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+
+            </div>
+            <div class="modal-body" id="myModalBodyDiv2">
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    var CheckOut = function () {
+        var url = "/ShoppingCart/CheckOut";
+        $("#myModalBodyDiv1").load(url, function () {
+            $("#myModal1").modal("show");
+        })
+    }
+
+    var CardDetails = function (id) {
+        var url = "/Advertisement/AdvertisementDetails?id=" + id;
+        $("#myModalBodyDiv2").load(url, function () {
+            $("#myModal2").modal("show");
+        })
+    }
+</script>
