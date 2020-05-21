@@ -23,7 +23,7 @@ namespace deadlineTrip.Models
            ShoppingCart cart =  _appDbContext.ShoppingCart.FirstOrDefault(x => x.account.Id == userId);
            return cart;
         }
-        public IEnumerable<ShoppingCartItem> GetShoppingCartItems(int cartId)
+        public IEnumerable<ShoppingCartItem> GetShoppingCartListItems(int cartId)
         {
             var allCards = _appDbContext.Card;
             var items = shoppingCartListItems ??

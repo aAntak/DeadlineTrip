@@ -1,7 +1,7 @@
 ﻿@model ShoppingCartViewModel
 <h4 class="mb-3"><strong>Payment</strong></h4>
 
-<form id="myForm" asp-controller="ShoppingCart" asp-action="SubmitPaymentAction" method="post">
+<form id="myForm" asp-controller="Payment" asp-action="SubmitPaymentAction" method="post">
     <div class="row">
         <div class="col-md-6 mb-2">
             <div class="md-form md-outline my-2">
@@ -50,3 +50,5 @@
 
 
 
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
