@@ -22,7 +22,8 @@ namespace deadlineTrip.Models
         public DbSet<Card> Card { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
-        public DbSet<MockBankCards> MockBankCards { get; set; }
+
+        public DbSet<Auction> Auctions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -50,13 +51,10 @@ namespace deadlineTrip.Models
             modelBuilder.Entity<Account>().HasData(Second);
             modelBuilder.Entity<Account>().HasData(Third);
 
-            //modelBuilder.Entity<ShoppingCart>().HasData(new ShoppingCart { ShoppingCartId = 1, Account = First, AccountId = First.Id }) ;
-            //modelBuilder.Entity<ShoppingCart>().HasData(new ShoppingCart { ShoppingCartId = 2, Account = Second, AccountId = Second.Id });
-            //modelBuilder.Entity<ShoppingCart>().HasData(new ShoppingCart { ShoppingCartId = 3, Account = Third, AccountId = Third.Id });
-
-            modelBuilder.Entity<MockBankCards>().HasData(new MockBankCards { id = "4035300539804083", FullName = "Petras Petraitis", ValidThrough = "05/23", cvv = "765" });
-            modelBuilder.Entity<MockBankCards>().HasData(new MockBankCards { id = "4035300539804084", FullName = "Stasys Stasaitis", ValidThrough = "05/24", cvv = "766" });
-            modelBuilder.Entity<MockBankCards>().HasData(new MockBankCards { id = "4035300539804085", FullName = "Vacys Vacaitis", ValidThrough = "05/25", cvv = "767" });
+            modelBuilder.Entity<Advertisement>().
+                HasOne(x => x.Auction).
+                WithOne(x => x.Advertisement).
+                HasForeignKey<Auction>(x => x.AdvertisementId);
 
         }
 

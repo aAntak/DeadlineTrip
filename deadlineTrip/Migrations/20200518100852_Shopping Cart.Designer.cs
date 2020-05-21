@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using deadlineTrip.Models;
 
 namespace deadlineTrip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200518100852_Shopping Cart")]
+    partial class ShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,32 +72,6 @@ namespace deadlineTrip.Migrations
                         new { Id = 2, AccountId = "Pirmas@gmail.com", CardId = 2, Price = 52m, Quantity = 46 },
                         new { Id = 3, AccountId = "Trecias@gmail.com", CardId = 3, Price = 14m, Quantity = 46 }
                     );
-                });
-
-            modelBuilder.Entity("deadlineTrip.Models.Auction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AdvertisementId");
-
-                    b.Property<double>("BuyNowPrice");
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<double?>("FinalPrice");
-
-                    b.Property<double>("StartingPrice");
-
-                    b.Property<string>("WinnerEmail");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdvertisementId")
-                        .IsUnique();
-
-                    b.ToTable("Auctions");
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.Card", b =>
@@ -187,14 +163,6 @@ namespace deadlineTrip.Migrations
                     b.HasOne("deadlineTrip.Models.Card", "Card")
                         .WithMany()
                         .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("deadlineTrip.Models.Auction", b =>
-                {
-                    b.HasOne("deadlineTrip.Models.Advertisement", "Advertisement")
-                        .WithOne("Auction")
-                        .HasForeignKey("deadlineTrip.Models.Auction", "AdvertisementId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
