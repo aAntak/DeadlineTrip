@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using deadlineTrip.Models;
 
 namespace deadlineTrip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200522141519_beggining6")]
+    partial class beggining6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,8 +55,6 @@ namespace deadlineTrip.Migrations
 
                     b.Property<int>("CardId");
 
-                    b.Property<bool>("IsInGame");
-
                     b.Property<decimal>("Price");
 
                     b.Property<int>("Quantity");
@@ -68,9 +68,9 @@ namespace deadlineTrip.Migrations
                     b.ToTable("Advertisements");
 
                     b.HasData(
-                        new { Id = 1, AccountId = "Pirmas@gmail.com", CardId = 1, IsInGame = false, Price = 46m, Quantity = 46 },
-                        new { Id = 2, AccountId = "Pirmas@gmail.com", CardId = 2, IsInGame = false, Price = 52m, Quantity = 46 },
-                        new { Id = 3, AccountId = "Trecias@gmail.com", CardId = 3, IsInGame = false, Price = 14m, Quantity = 46 }
+                        new { Id = 1, AccountId = "Pirmas@gmail.com", CardId = 1, Price = 46m, Quantity = 46 },
+                        new { Id = 2, AccountId = "Pirmas@gmail.com", CardId = 2, Price = 52m, Quantity = 46 },
+                        new { Id = 3, AccountId = "Trecias@gmail.com", CardId = 3, Price = 14m, Quantity = 46 }
                     );
                 });
 

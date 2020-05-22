@@ -20,7 +20,7 @@ namespace deadlineTrip.Models
         public string AccountId { get; set; }
         public int CardId { get; set; }
         public Card Card { get; set; }
-
+        public bool IsInGame { get; set; }
         public Auction Auction { get; set; }
         
         

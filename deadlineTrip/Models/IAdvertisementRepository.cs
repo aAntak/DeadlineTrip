@@ -13,6 +13,6 @@ namespace deadlineTrip.Models
         Advertisement GetAdvertisement(int id);
         void Update(int id, int quantity, decimal price);
         IEnumerable<Advertisement> GetAllAdvertisements();
-
+        void AddToTheGame(int id);
     }
 }

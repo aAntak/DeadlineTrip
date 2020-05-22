@@ -89,7 +89,15 @@ namespace deadlineTrip.Models
                 _appDbContext.SaveChanges();
             }
         }
-
+        public void AddToTheGame(int id) 
+        {
+            Advertisement ad = GetAdvertisement(id);
+            if (ad != null)
+            {
+                ad.IsInGame = true;
+                _appDbContext.SaveChanges();
+            }
+        }
 
 
 

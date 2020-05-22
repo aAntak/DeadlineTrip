@@ -53,6 +53,14 @@
                 {
                     <button disabled type="submit" class="btn btn-cyan">Card is in auction</button>
                 }
+                if (!Model.Advertisements.IsInGame)
+                {
+                    <a class="btn btn-success btn-sm" asp-controller="Advertisement" asp-action="AddToTheGame" asp-route-id="@Model.Advertisements.Id">Add to the game</a>
+                }
+                else
+                {
+                    <button disabled type="submit" class="btn btn-cyan">Card is in the game</button>
+                }
             }
             else
             {
