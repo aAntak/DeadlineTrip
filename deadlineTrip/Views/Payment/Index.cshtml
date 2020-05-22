@@ -1,0 +1,54 @@
+﻿@model ShoppingCartViewModel
+<h4 class="mb-3"><strong>Payment</strong></h4>
+
+<form id="myForm" asp-controller="Payment" asp-action="SubmitPaymentAction" method="post">
+    <div class="row">
+        <div class="col-md-6 mb-2">
+            <div class="md-form md-outline my-2">
+                <input asp-for="@Model.MockBankCards.FullName" class="form-control" />
+                <label asp-for="@Model.MockBankCards.FullName">Full name on card</label>
+                <span asp-validation-for="@Model.MockBankCards.FullName" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="col-md-6 mb-2">
+            <div class="md-form md-outline my-2">
+                <input asp-for="@Model.MockBankCards.id" class="form-control" />
+                <label asp-for="@Model.MockBankCards.id">Credit card number</label>
+                <span asp-validation-for="@Model.MockBankCards.id" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="md-form md-outline my-2">
+                <input asp-for="@Model.MockBankCards.ValidThrough" class="form-control" />
+                <label asp-for="@Model.MockBankCards.ValidThrough">Expiration date (MM/YY)</label>
+                <span asp-validation-for="@Model.MockBankCards.ValidThrough" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="md-form md-outline my-2">
+                <input asp-for="@Model.MockBankCards.cvv" class="form-control" />
+                <label asp-for="@Model.MockBankCards.cvv">CVV</label>
+                <span asp-validation-for="@Model.MockBankCards.cvv" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="md-form">
+        <label asp-for="@Model.ShoppingCartTotal" class="control-label active disabled"><span> Total Price</span></label>
+        <input asp-for="@Model.ShoppingCartTotal" disabled class="form-control" />
+        <span asp-validation-for="@Model.ShoppingCartTotal" class="text-danger"></span>
+    </div>
+    <hr class="mb-4">
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Confirm</button>
+</form>
+
+
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>

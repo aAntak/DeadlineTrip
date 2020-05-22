@@ -10,5 +10,6 @@ namespace deadlineTrip.ViewModels
     {
         public ShoppingCart ShoppingCart { get; set; }
         public decimal ShoppingCartTotal { get; set; }
+        public MockBankCards MockBankCards { get; set; }
     }
 }
