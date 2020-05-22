@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using deadlineTrip.HostedService;
 using deadlineTrip.Models;
 using deadlineTrip.Models.APIs;
 using Microsoft.AspNetCore.Builder;
@@ -48,6 +49,9 @@ namespace deadlineTrip
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpContextAccessor();
+
+            services.AddHostedService<CheckWonAuctionsService>();
+
 
             // services.AddDistributedMemoryCache();
 

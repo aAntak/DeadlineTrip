@@ -19,5 +19,7 @@ namespace deadlineTrip.Models
         public int AdvertisementId { get; set; }
         public virtual Advertisement Advertisement { get; set; }
 
+        public virtual IEnumerable<AuctionBet> Bets { get; set; }
+
     }
 }

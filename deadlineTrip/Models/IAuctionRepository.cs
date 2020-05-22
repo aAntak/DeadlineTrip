@@ -9,5 +9,15 @@ namespace deadlineTrip.Models
     {
         bool AddCardToAuction(Auction auction);
 
+        double? GetHighestBetForAuction(int auctionId);
+        bool? CheckIfAuctionHasEnded(int auctionId);
+        void RegisterBet(AuctionBet bet);
+
+        IEnumerable<Auction> GetAll();
+
+        IEnumerable<Auction> GetWonAuctions(string user);
+
+        void setWinnerToAuction(int auctionId, string userId, double finalPrice);
+
     }
 }

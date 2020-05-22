@@ -73,7 +73,7 @@ namespace deadlineTrip.Models
         public Advertisement GetAdvertisement(int id)
         {
             Advertisement ad = _appDbContext.Advertisements
-                .Include(x => x.Auction)
+                .Include(x => x.Auction).ThenInclude(x => x.Bets)
                 .SingleOrDefault(x => x.Id == id);
 
             return ad;
