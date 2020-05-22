@@ -22,5 +22,18 @@ namespace deadlineTrip.Models
             _appDbContext.Game.Add(game);
             _appDbContext.SaveChanges();
         }
+
+        public Game GetCard(int userID) 
+        {
+            var games = Games ??
+                   (Games =
+                       _appDbContext.Game.Include(x=>x.Card).ThenInclude(x=>x.Card)
+                           .ToList());
+            foreach (Game game in games)
+            {
+               return game;
+            }
+            return null;
+        }
     }
 }

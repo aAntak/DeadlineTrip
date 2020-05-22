@@ -14,15 +14,28 @@ namespace deadlineTrip.Controllers
     {
         private readonly IGameRepository _gameRepository;
         private readonly IAdvertisementRepository _advertisementRepository;
+        private readonly ICardRepository _cardRepository;
         public GameController(IAdvertisementRepository advertisementRepository,
-            IGameRepository gameRepository)
+                              IGameRepository gameRepository,
+                              ICardRepository cardRepository)
+        
         {
             _advertisementRepository = advertisementRepository;
             _gameRepository = gameRepository;
+            _cardRepository = cardRepository;
         }
         public ViewResult list() 
         {
+
             return View("List");
+        }
+        public ViewResult OpenGame()
+        {
+            //IEnumerable<Game> ads = _gameRepository.GetCard();
+            //Advertisement ad = _advertisementRepository.GetAdvertisement(1);
+            Game result = _gameRepository.GetCard(1);
+
+            return View("GameScreen", result);
         }
     }
 }
