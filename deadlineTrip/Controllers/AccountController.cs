@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using deadlineTrip.Models;
+using deadlineTrip.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +16,12 @@ namespace deadlineTrip.Controllers
     {
 
         private readonly IAccountRepository _accountRepository;
+        private readonly IAuctionRepository _auctionRepo;
 
-        public AccountController(IAccountRepository accountRepository)
+        public AccountController(IAccountRepository accountRepository, IAuctionRepository auctionRepo)
         {
             _accountRepository = accountRepository;
+            _auctionRepo = auctionRepo;
         }
 
 
@@ -28,13 +31,24 @@ namespace deadlineTrip.Controllers
             return View();
         }
 
-       //[Route("login")]
+        public IActionResult openAccountDetails()
+        {
+            return View("Profile");
+        }
+        public IActionResult ShowAuctionList()
+        {
+            var userId = HttpContext.Session.GetString("username");
+
+            var auctions = _auctionRepo.GetWonAuctions(userId);
+            return View("List", new WonAuctionsViewModel { Auctions = auctions });
+        }
+        
+
+        //[Route("login")]
         [HttpPost]
         public IActionResult Login(string email, string password)
         {
-            
-           
-            if (email != null && password != null)
+     if (email != null && password != null)
             {
                 var user = _accountRepository.GetUserByEmail(email);
                 if (user != null && user.Password.Equals(password) && email.Equals(user.Id))
@@ -45,7 +59,7 @@ namespace deadlineTrip.Controllers
             }   
                 ViewBag.error = "Invalid Account";
                 return View("Index");
-            
+        
         }
 
         //[Route("logout")]

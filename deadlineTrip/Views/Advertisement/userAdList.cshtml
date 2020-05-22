@@ -229,6 +229,9 @@
             if (auctionCreated) {
                 $("#auctionSuccess").removeAttr('hidden')
                 auctionCreated = false;
+            } if (betHasBeenMade) {
+                $("#betSuccess").removeAttr('hidden')
+                betHasBeenMade = false;
             }
         })
     }
@@ -238,6 +241,7 @@
     let adId;
     let approved = false
     let auctionCreated = false
+    let betHasBeenMade = false
 
     if (window.ActiveXObject) {
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
@@ -377,6 +381,28 @@
         }
 
         return false;
+    }
+
+    function placeBet(auctionId, advertismentId) {
+        $("#betSuccess").attr('hidden', true)
+        let betValue = $('#betValue').val().replace(',', '.')
+        xmlhttp.open("POST", "/Advertisement/PlaceBet?newPrice=" + betValue + '&auctionId=' + auctionId, true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                if (xmlhttp.response == "Bet error") {
+                    $('#betError').text('Bet error, make sure bet is higher than current price!')
+                    $('#betError').attr("hidden", false);
+                }if (xmlhttp.response == "Auction has ended") {
+                    $('#betError').text('Auction has ended!')
+                    $('#betError').attr("hidden", false);
+                } if (xmlhttp.status == 200) {
+                    betHasBeenMade = true;
+                    $("#cardDetails_" + advertismentId)[0].click()
+
+                }
+            }
+        }
     }
 </script>
 

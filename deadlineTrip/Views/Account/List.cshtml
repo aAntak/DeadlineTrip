@@ -1,0 +1,32 @@
+﻿@model WonAuctionsViewModel
+@{
+    ViewData["Title"] = "List";
+}
+
+<h2>Won auctions list</h2>
+@if (Model.Auctions.Count() == 0)
+{
+    <h4>No won auctions</h4>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Card name</th>
+            <th scope="col">End date</th>
+            <th scope="col">Final price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var auction in Model.Auctions)
+         {
+           <tr>
+            <th >@auction.Advertisement.Card.Name</th>
+            <td>@auction.EndDate</td>
+            <td>@auction.FinalPrice</td>
+            </tr>
+       }
+    </tbody>
+</table>
+}
