@@ -42,6 +42,7 @@ namespace deadlineTrip
             services.AddScoped<ICardSystemAPI, CardSystemAPI>();
             services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IGameVoteRepository, GameVoteRepository>();
 
             services.AddDbContext<AppDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

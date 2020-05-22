@@ -15,6 +15,6 @@ namespace deadlineTrip.Models
         public Account User { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
-        public Vote_type Vote_type { get; set; }
+        public int Vote_type { get; set; }
     }
 }

@@ -15,14 +15,20 @@ namespace deadlineTrip.Controllers
         private readonly IGameRepository _gameRepository;
         private readonly IAdvertisementRepository _advertisementRepository;
         private readonly ICardRepository _cardRepository;
+        private readonly IGameVoteRepository _gameVoteRepository;
+        private readonly IAccountRepository _accountRepository;
         public GameController(IAdvertisementRepository advertisementRepository,
                               IGameRepository gameRepository,
-                              ICardRepository cardRepository)
+                              IGameVoteRepository gameVoteRepository,
+                              ICardRepository cardRepository,
+                              IAccountRepository accountRepository)
         
         {
             _advertisementRepository = advertisementRepository;
             _gameRepository = gameRepository;
+            _gameVoteRepository = gameVoteRepository;
             _cardRepository = cardRepository;
+            _accountRepository = accountRepository;
         }
         public ViewResult list() 
         {
@@ -34,6 +40,16 @@ namespace deadlineTrip.Controllers
             string accountId = HttpContext.Session.GetString("username");
             Game result = _gameRepository.GetCard(accountId);
 
+            return View("GameScreen", result);
+        }
+        public ViewResult Vote(int value, int id) 
+        {
+            Game game = _gameRepository.GetGame(id);
+            string accountId = HttpContext.Session.GetString("username");
+            Account acc = _accountRepository.GetUserByEmail(accountId);
+            GameVote vote = new GameVote { Game = game, User = acc, Vote_type = value};
+            _gameVoteRepository.SaveVote(vote);
+            Game result = _gameRepository.GetCard(accountId);
             return View("GameScreen", result);
         }
     }

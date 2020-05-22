@@ -30,11 +30,8 @@ namespace deadlineTrip.Models
        (Games =
            _appDbContext.Game.Include(x => x.Card).ThenInclude(x => x.Card)
                .ToList());
-            var a = _appDbContext.GameVote.Count();
-            if (a != 0)
-            {
                 var votes = GameVotes ?? (GameVotes =
-                                           _appDbContext.GameVote.Include(x => x.UserId).Include(x => x.GameId).ToList());
+                                           _appDbContext.GameVote.Include(x => x.User).Include(x => x.Game).ToList());
                 int i = 0;
                 foreach (Game game in games)
                 {
@@ -52,11 +49,14 @@ namespace deadlineTrip.Models
                     i = 0;
                 }
                 return null;
-            }
-            else 
-            {
-                return games[0];
-            }
+        }
+        public Game GetGame(int id)
+        {
+            Game ad = _appDbContext.Game
+                .Include(x => x.Card)
+                .SingleOrDefault(x => x.Id == id);
+
+            return ad;
         }
     }
 }

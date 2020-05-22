@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace deadlineTrip.Models
 {
-    public interface IGameRepository
+    public interface IGameVoteRepository
     {
-        void AddCardToTheGame(Game game);
-        Game GetCard(string userID);
-        Game GetGame(int id);
+        void SaveVote(GameVote gameVote);
     }
 }

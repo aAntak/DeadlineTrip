@@ -40,8 +40,8 @@
     </div>
     <div class="flex-center">
 
-        <a class="btn btn-danger btn-sm" asp-controller="Advertisement" asp-action="AddToTheGame">Price is too small</a>
-        <a class="btn btn-success btn-sm" asp-controller="Advertisement" asp-action="AddToTheGame">Price is good</a>
-        <a class="btn btn-primary btn-sm" asp-controller="Advertisement" asp-action="AddToTheGame">Price is too high</a>
+        <a class="btn btn-danger btn-sm" asp-controller="Game" asp-action="Vote"  asp-route-value=1 asp-route-id = "@Model.Id">Price is too small</a>
+        <a class="btn btn-success btn-sm" asp-controller="Game" asp-action="Vote" asp-route-value=2 asp-route-id = "@Model.Id">Price is good</a>
+        <a class="btn btn-primary btn-sm" asp-controller="Game" asp-action="Vote" asp-route-value=3 asp-route-id = "@Model.Id">Price is too high</a>
 
     </div>
