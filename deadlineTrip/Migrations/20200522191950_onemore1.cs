@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace deadlineTrip.Migrations
 {
-    public partial class beggining : Migration
+    public partial class onemore1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,13 +27,26 @@ namespace deadlineTrip.Migrations
                 name: "Retumas",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    pav = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Retumas", x => x.id);
+                    table.PrimaryKey("PK_Retumas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vote_type",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vote_type", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,16 +79,16 @@ namespace deadlineTrip.Migrations
                     Attack = table.Column<int>(nullable: false),
                     Defense = table.Column<int>(nullable: false),
                     Level = table.Column<int>(nullable: false),
-                    Retumasid = table.Column<int>(nullable: true)
+                    RetumasId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Card", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Card_Retumas_Retumasid",
-                        column: x => x.Retumasid,
+                        name: "FK_Card_Retumas_RetumasId",
+                        column: x => x.RetumasId,
                         principalTable: "Retumas",
-                        principalColumn: "id",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -88,7 +101,8 @@ namespace deadlineTrip.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     AccountId = table.Column<string>(nullable: true),
-                    CardId = table.Column<int>(nullable: false)
+                    CardId = table.Column<int>(nullable: false),
+                    IsInGame = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,6 +146,27 @@ namespace deadlineTrip.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Game",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CardId = table.Column<int>(nullable: false),
+                    GameVote = table.Column<int>(nullable: false),
+                    MaxVoteCount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Game", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Game_Advertisements_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Advertisements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingCartItem",
                 columns: table => new
                 {
@@ -158,6 +193,39 @@ namespace deadlineTrip.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "GameVote",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    GameId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Vote_typeId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameVote", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GameVote_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GameVote_Accounts_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_GameVote_Vote_type_Vote_typeId",
+                        column: x => x.Vote_typeId,
+                        principalTable: "Vote_type",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "Accounts",
                 columns: new[] { "Id", "BirthDate", "LastName", "Name", "Password" },
@@ -170,7 +238,7 @@ namespace deadlineTrip.Migrations
 
             migrationBuilder.InsertData(
                 table: "Card",
-                columns: new[] { "Id", "Attack", "Defense", "Image", "Level", "Name", "Retumasid" },
+                columns: new[] { "Id", "Attack", "Defense", "Image", "Level", "Name", "RetumasId" },
                 values: new object[,]
                 {
                     { 1, 25, 42, "https://static.cardmarket.com/img/9274d1a282a820759dbbf43d35d14a4d/items/5/DUOV/442543.jpg", 3, "Predaplant Verte Anaconda", null },
@@ -179,19 +247,29 @@ namespace deadlineTrip.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Advertisements",
-                columns: new[] { "Id", "AccountId", "CardId", "Price", "Quantity" },
-                values: new object[] { 1, "Pirmas@gmail.com", 1, 46m, 46 });
+                table: "Vote_type",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Price is good" },
+                    { 2, "Price is too low" },
+                    { 3, "Price is too big" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Advertisements",
-                columns: new[] { "Id", "AccountId", "CardId", "Price", "Quantity" },
-                values: new object[] { 2, "Pirmas@gmail.com", 2, 52m, 46 });
+                columns: new[] { "Id", "AccountId", "CardId", "IsInGame", "Price", "Quantity" },
+                values: new object[] { 1, "Pirmas@gmail.com", 1, false, 46m, 46 });
 
             migrationBuilder.InsertData(
                 table: "Advertisements",
-                columns: new[] { "Id", "AccountId", "CardId", "Price", "Quantity" },
-                values: new object[] { 3, "Trecias@gmail.com", 3, 14m, 46 });
+                columns: new[] { "Id", "AccountId", "CardId", "IsInGame", "Price", "Quantity" },
+                values: new object[] { 2, "Pirmas@gmail.com", 2, false, 52m, 46 });
+
+            migrationBuilder.InsertData(
+                table: "Advertisements",
+                columns: new[] { "Id", "AccountId", "CardId", "IsInGame", "Price", "Quantity" },
+                values: new object[] { 3, "Trecias@gmail.com", 3, false, 14m, 46 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Advertisements_AccountId",
@@ -210,9 +288,29 @@ namespace deadlineTrip.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Card_Retumasid",
+                name: "IX_Card_RetumasId",
                 table: "Card",
-                column: "Retumasid");
+                column: "RetumasId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Game_CardId",
+                table: "Game",
+                column: "CardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameVote_GameId",
+                table: "GameVote",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameVote_UserId",
+                table: "GameVote",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameVote_Vote_typeId",
+                table: "GameVote",
+                column: "Vote_typeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCart_accountId",
@@ -236,7 +334,16 @@ namespace deadlineTrip.Migrations
                 name: "Auctions");
 
             migrationBuilder.DropTable(
+                name: "GameVote");
+
+            migrationBuilder.DropTable(
                 name: "ShoppingCartItem");
+
+            migrationBuilder.DropTable(
+                name: "Game");
+
+            migrationBuilder.DropTable(
+                name: "Vote_type");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCart");

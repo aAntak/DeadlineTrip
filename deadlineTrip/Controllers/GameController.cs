@@ -31,9 +31,8 @@ namespace deadlineTrip.Controllers
         }
         public ViewResult OpenGame()
         {
-            //IEnumerable<Game> ads = _gameRepository.GetCard();
-            //Advertisement ad = _advertisementRepository.GetAdvertisement(1);
-            Game result = _gameRepository.GetCard(1);
+            string accountId = HttpContext.Session.GetString("username");
+            Game result = _gameRepository.GetCard(accountId);
 
             return View("GameScreen", result);
         }

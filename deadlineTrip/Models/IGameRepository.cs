@@ -8,6 +8,6 @@ namespace deadlineTrip.Models
     public interface IGameRepository
     {
         void AddCardToTheGame(Game game);
-        Game GetCard(int userID);
+        Game GetCard(string userID);
     }
 }

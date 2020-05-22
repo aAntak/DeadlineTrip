@@ -156,7 +156,7 @@ namespace deadlineTrip.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("GameId");
+                    b.Property<int>("GameId");
 
                     b.Property<string>("UserId");
 
@@ -280,7 +280,8 @@ namespace deadlineTrip.Migrations
                 {
                     b.HasOne("deadlineTrip.Models.Game", "Game")
                         .WithMany()
-                        .HasForeignKey("GameId");
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("deadlineTrip.Models.Account", "User")
                         .WithMany()

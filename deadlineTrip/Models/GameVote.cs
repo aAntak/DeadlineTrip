@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +10,11 @@ namespace deadlineTrip.Models
     {
         public int Id { get; set; }
         public Game Game { get; set; }
+        [ForeignKey("Game")]
+        public int GameId { get; set; }
         public Account User { get; set; }
+        [ForeignKey("User")]
+        public string UserId { get; set; }
         public Vote_type Vote_type { get; set; }
     }
 }

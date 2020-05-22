@@ -10,8 +10,8 @@ using deadlineTrip.Models;
 namespace deadlineTrip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200522152959_beggining8")]
-    partial class beggining8
+    [Migration("20200522191950_onemore1")]
+    partial class onemore1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -139,7 +139,7 @@ namespace deadlineTrip.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CardId");
+                    b.Property<int>("CardId");
 
                     b.Property<int>("GameVote");
 
@@ -158,7 +158,7 @@ namespace deadlineTrip.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("GameId");
+                    b.Property<int>("GameId");
 
                     b.Property<string>("UserId");
 
@@ -274,14 +274,16 @@ namespace deadlineTrip.Migrations
                 {
                     b.HasOne("deadlineTrip.Models.Advertisement", "Card")
                         .WithMany()
-                        .HasForeignKey("CardId");
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.GameVote", b =>
                 {
                     b.HasOne("deadlineTrip.Models.Game", "Game")
                         .WithMany()
-                        .HasForeignKey("GameId");
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("deadlineTrip.Models.Account", "User")
                         .WithMany()
