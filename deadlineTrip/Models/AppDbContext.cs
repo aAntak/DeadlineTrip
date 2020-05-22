@@ -22,7 +22,9 @@ namespace deadlineTrip.Models
         public DbSet<Card> Card { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
-
+        public DbSet<Game> Game { get; set; }
+        public DbSet<GameVote> GameVote { get; set; }
+        public DbSet<Vote_type> Vote_type { get; set; }
         public DbSet<Auction> Auctions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +48,10 @@ namespace deadlineTrip.Models
             Account First = new Account { Id = "Pirmas@gmail.com", Name = "Pirmas", LastName = "Pirmaitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) };
             Account Second = new Account { Id = "Antras@gmail.com", Name = "Antras", LastName = "Antraitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) };
             Account Third = new Account { Id = "Trecias@gmail.com", Name = "Trecias", LastName = "Trecaitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) };
+
+            modelBuilder.Entity<Vote_type>().HasData(new Vote_type { Id = 1, Name = "Price is good" });
+            modelBuilder.Entity<Vote_type>().HasData(new Vote_type { Id = 2, Name = "Price is too low" });
+            modelBuilder.Entity<Vote_type>().HasData(new Vote_type { Id = 3, Name = "Price is too big" });
 
             modelBuilder.Entity<Account>().HasData(First);
             modelBuilder.Entity<Account>().HasData(Second);

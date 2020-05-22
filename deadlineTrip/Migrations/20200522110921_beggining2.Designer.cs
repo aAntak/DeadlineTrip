@@ -10,14 +10,14 @@ using deadlineTrip.Models;
 namespace deadlineTrip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200520122430_auction")]
-    partial class auction
+    [Migration("20200522110921_beggining2")]
+    partial class beggining2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -116,11 +116,11 @@ namespace deadlineTrip.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("Retumasid");
+                    b.Property<int?>("RetumasId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Retumasid");
+                    b.HasIndex("RetumasId");
 
                     b.ToTable("Card");
 
@@ -131,15 +131,57 @@ namespace deadlineTrip.Migrations
                     );
                 });
 
-            modelBuilder.Entity("deadlineTrip.Models.Retumas", b =>
+            modelBuilder.Entity("deadlineTrip.Models.Game", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("pav");
+                    b.Property<int?>("CardId");
 
-                    b.HasKey("id");
+                    b.Property<int>("GameVote");
+
+                    b.Property<int>("MaxVoteCount");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.ToTable("Game");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.GameVote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("GameId");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<int?>("Vote_typeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("Vote_typeId");
+
+                    b.ToTable("GameVote");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.Retumas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Retumas");
                 });
@@ -180,6 +222,19 @@ namespace deadlineTrip.Migrations
                     b.ToTable("ShoppingCartItem");
                 });
 
+            modelBuilder.Entity("deadlineTrip.Models.Vote_type", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vote_type");
+                });
+
             modelBuilder.Entity("deadlineTrip.Models.Advertisement", b =>
                 {
                     b.HasOne("deadlineTrip.Models.Account")
@@ -204,7 +259,29 @@ namespace deadlineTrip.Migrations
                 {
                     b.HasOne("deadlineTrip.Models.Retumas", "Retumas")
                         .WithMany()
-                        .HasForeignKey("Retumasid");
+                        .HasForeignKey("RetumasId");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.Game", b =>
+                {
+                    b.HasOne("deadlineTrip.Models.Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.GameVote", b =>
+                {
+                    b.HasOne("deadlineTrip.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId");
+
+                    b.HasOne("deadlineTrip.Models.Account", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("deadlineTrip.Models.Vote_type", "Vote_type")
+                        .WithMany()
+                        .HasForeignKey("Vote_typeId");
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.ShoppingCart", b =>

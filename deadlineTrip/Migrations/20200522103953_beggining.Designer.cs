@@ -10,14 +10,14 @@ using deadlineTrip.Models;
 namespace deadlineTrip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200412111732_seedData")]
-    partial class seedData
+    [Migration("20200522103953_beggining")]
+    partial class beggining
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -74,6 +74,32 @@ namespace deadlineTrip.Migrations
                     );
                 });
 
+            modelBuilder.Entity("deadlineTrip.Models.Auction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdvertisementId");
+
+                    b.Property<double>("BuyNowPrice");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<double?>("FinalPrice");
+
+                    b.Property<double>("StartingPrice");
+
+                    b.Property<string>("WinnerEmail");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdvertisementId")
+                        .IsUnique();
+
+                    b.ToTable("Auctions");
+                });
+
             modelBuilder.Entity("deadlineTrip.Models.Card", b =>
                 {
                     b.Property<int>("Id")
@@ -118,6 +144,42 @@ namespace deadlineTrip.Migrations
                     b.ToTable("Retumas");
                 });
 
+            modelBuilder.Entity("deadlineTrip.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("ShoppingCartId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("accountId");
+
+                    b.HasKey("ShoppingCartId");
+
+                    b.HasIndex("accountId");
+
+                    b.ToTable("ShoppingCart");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("ShoppingCartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ShoppingCartId1");
+
+                    b.Property<int>("adId");
+
+                    b.Property<int>("quantity");
+
+                    b.HasKey("ShoppingCartItemId");
+
+                    b.HasIndex("ShoppingCartId1");
+
+                    b.HasIndex("adId");
+
+                    b.ToTable("ShoppingCartItem");
+                });
+
             modelBuilder.Entity("deadlineTrip.Models.Advertisement", b =>
                 {
                     b.HasOne("deadlineTrip.Models.Account")
@@ -130,11 +192,38 @@ namespace deadlineTrip.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("deadlineTrip.Models.Auction", b =>
+                {
+                    b.HasOne("deadlineTrip.Models.Advertisement", "Advertisement")
+                        .WithOne("Auction")
+                        .HasForeignKey("deadlineTrip.Models.Auction", "AdvertisementId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("deadlineTrip.Models.Card", b =>
                 {
                     b.HasOne("deadlineTrip.Models.Retumas", "Retumas")
                         .WithMany()
                         .HasForeignKey("Retumasid");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("deadlineTrip.Models.Account", "account")
+                        .WithMany()
+                        .HasForeignKey("accountId");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("deadlineTrip.Models.ShoppingCart", "ShoppingCartId")
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartId1");
+
+                    b.HasOne("deadlineTrip.Models.Advertisement", "ad")
+                        .WithMany()
+                        .HasForeignKey("adId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

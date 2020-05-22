@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace deadlineTrip.Models
 {
-    public class Retumas
+    public class GameVote
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public Game Game { get; set; }
+        public Account User { get; set; }
+        public Vote_type Vote_type { get; set; }
     }
 }
