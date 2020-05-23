@@ -16,7 +16,8 @@ namespace deadlineTrip.ViewModels
 
         public bool ifInAuction { get; set; }
 
-        public bool? HasAuctionFinished { get; set; }
+        public bool ifInGame { get; set; }
 
+        public bool? HasAuctionFinished { get; set; }
     }
 }

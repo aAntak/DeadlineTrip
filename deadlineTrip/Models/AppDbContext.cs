@@ -22,7 +22,9 @@ namespace deadlineTrip.Models
         public DbSet<Card> Card { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
-
+        public DbSet<Game> Game { get; set; }
+        public DbSet<GameVote> GameVote { get; set; }
+        public DbSet<Vote_type> Vote_type { get; set; }
         public DbSet<Auction> Auctions { get; set; }
 
         public DbSet<AuctionBet> AuctionBets { get; set; }
@@ -36,9 +38,9 @@ namespace deadlineTrip.Models
 
 
             //seed categories
-            modelBuilder.Entity<Card>().HasData(new Card { Id = 1, Name = "Predaplant Verte Anaconda", Image = "https://static.cardmarket.com/img/9274d1a282a820759dbbf43d35d14a4d/items/5/DUOV/442543.jpg", Attack = 25, Defense = 42, Level = 3 });
-            modelBuilder.Entity<Card>().HasData(new Card { Id = 2, Name = "PSY-Framelord Omega", Image = "https://static.cardmarket.com/img/9274d1a282a820759dbbf43d35d14a4d/items/5/DUOV/442843.jpg", Attack = 42, Defense = 100, Level = 1 });
-            modelBuilder.Entity<Card>().HasData(new Card { Id = 3, Name = "Bebru valdovas", Image = "https://lh3.googleusercontent.com/proxy/vBhKwbhLVflNslii0Ycy2El2BrErJbRL9Chck3w_BIK9UYlhD1JsH8uk_EMEHjZJIc33qZHRJxSMsPR8BvxLSzNLlQ10mAoO4wMvi9qH_-o1JImao2JXYQDGy7cEC52Pc6lYbmnaBVL6Isab_XdrVKYaNxgUElngFYc6Wud8NlACspGwp4wpyf6_yu2TDTI_wwDEAjgba4akf9o85t_P207cWkU", Attack = 9999, Defense = 9999, Level = 99 });
+            modelBuilder.Entity<Card>().HasData(new Card { Id = 1, Name = "Predaplant Verte Anaconda", Image = "https://static.cardmarket.com/img/9274d1a282a820759dbbf43d35d14a4d/items/5/DUOV/442543.jpg", Attack = 25, Defense = 42, Level = 3});
+            modelBuilder.Entity<Card>().HasData(new Card { Id = 2, Name = "PSY-Framelord Omega", Image = "https://static.cardmarket.com/img/9274d1a282a820759dbbf43d35d14a4d/items/5/DUOV/442843.jpg", Attack = 42, Defense = 100, Level = 1}) ;
+            modelBuilder.Entity<Card>().HasData(new Card { Id = 3, Name = "Bebru valdovas", Image = "https://lh3.googleusercontent.com/proxy/vBhKwbhLVflNslii0Ycy2El2BrErJbRL9Chck3w_BIK9UYlhD1JsH8uk_EMEHjZJIc33qZHRJxSMsPR8BvxLSzNLlQ10mAoO4wMvi9qH_-o1JImao2JXYQDGy7cEC52Pc6lYbmnaBVL6Isab_XdrVKYaNxgUElngFYc6Wud8NlACspGwp4wpyf6_yu2TDTI_wwDEAjgba4akf9o85t_P207cWkU", Attack = 9999, Defense = 9999, Level = 99});
 
 
             modelBuilder.Entity<Advertisement>().HasData(new Advertisement { Id = 1, Price = 46, Quantity = 46, AccountId = "Pirmas@gmail.com", CardId = 1 });
@@ -48,6 +50,10 @@ namespace deadlineTrip.Models
             Account First = new Account { Id = "Pirmas@gmail.com", Name = "Pirmas", LastName = "Pirmaitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) };
             Account Second = new Account { Id = "Antras@gmail.com", Name = "Antras", LastName = "Antraitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) };
             Account Third = new Account { Id = "Trecias@gmail.com", Name = "Trecias", LastName = "Trecaitis", Password = "test", BirthDate = new DateTime(2015, 12, 25) };
+
+            modelBuilder.Entity<Vote_type>().HasData(new Vote_type { Id = 1, Name = "Price is good" });
+            modelBuilder.Entity<Vote_type>().HasData(new Vote_type { Id = 2, Name = "Price is too low" });
+            modelBuilder.Entity<Vote_type>().HasData(new Vote_type { Id = 3, Name = "Price is too big" });
 
             modelBuilder.Entity<Account>().HasData(First);
             modelBuilder.Entity<Account>().HasData(Second);

@@ -7,7 +7,7 @@ namespace deadlineTrip.Models
 {
     public class Retumas
     {
-        public int id { get; set; }
-        public string pav { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

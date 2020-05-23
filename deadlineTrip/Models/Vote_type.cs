@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace deadlineTrip.Models
 {
-    public interface ICardRepository
+    public class Vote_type
     {
-
-        IEnumerable<Card> getAllCards();
-        Card GetCard(int id);
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

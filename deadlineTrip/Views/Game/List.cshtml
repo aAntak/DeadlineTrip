@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Game>
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Http;
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td class="col-sm-8 col-md-6">
+                            <div class="media">
+                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="@item.Card.Card.Image" style="width: 100px; height: 140px;"> </a>
+                                <div class="media-body" style="margin:10px">
+                                    <h4 class="media-heading"><a href="#">@item.Card.Card.Name</a></h4>
+                                    <h5 class="media-heading"><a href="#">Level: @item.Card.Card.Level</a></h5>
+                                    <span>Kaina: </span><span class="text-success"><strong>@item.Card.Price</strong></span>
+                                    <br><span>Esamas balsų skaičius </span><span class="test-success"><strong>@item.GameVote</strong></span><br>
+                                    <span>Maksimalus balsų skaičius </span><span class="test-success"><strong>@item.MaxVoteCount</strong></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td><a class="btn btn-danger btn-sm" asp-controller="Game" asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure you wish to delete this card from the game?');"><i class="fas fa-trash"></i></a></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

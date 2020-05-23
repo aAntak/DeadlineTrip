@@ -108,6 +108,18 @@
                     <button onclick="GetMarketPrice(@Model.Cards.Id, @Model.Advertisements.Id)" type="submit" class="btn btn-primary">Calculate market price</button>
                     <button onclick="OpenAuctionForm(@Model.Advertisements.Id)" type="submit" class="btn btn-warning">Start auction</button>
                 }
+                else
+                {
+                    <button disabled type="submit" class="btn btn-cyan">Card is in auction</button>
+                }
+                if (!Model.Advertisements.IsInGame)
+                {
+                    <a class="btn btn-success btn-sm" asp-controller="Advertisement" asp-action="AddToTheGame" asp-route-id="@Model.Advertisements.Id">Add to the game</a>
+                }
+                else
+                {
+                    <button disabled type="submit" class="btn btn-cyan">Card is in the game</button>
+                }
             }
             else
             {
@@ -117,7 +129,7 @@
                 }
             }
         </div>
-
+        </div>
         <script>
             if ('@endDate' != '') {
                 auctionCountdown()

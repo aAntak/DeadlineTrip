@@ -20,6 +20,7 @@ namespace deadlineTrip.Controllers
         private readonly ICardRepository _cardRepository;
         private readonly ICardSystemAPI _cardsAPI;
         private readonly IAuctionRepository _auctionRepo;
+        private readonly IGameRepository _gameRepository;
 
 
         //  AddScope injects repositories into controller
@@ -29,13 +30,15 @@ namespace deadlineTrip.Controllers
                                        IAccountRepository accountRepository,
                                        ICardRepository cardRepository,
                                        ICardSystemAPI cardsAPI,
-                                       IAuctionRepository auctionRepo)
+                                       IAuctionRepository auctionRepo,
+                                       IGameRepository gameRepository)
         {
             _advertisementRepository = advertisementRepository;
             _accountRepository = accountRepository;
             _cardRepository = cardRepository;
             _cardsAPI = cardsAPI;
             _auctionRepo = auctionRepo;
+            _gameRepository = gameRepository;
         }
         public ViewResult userAdList()
         {
@@ -152,6 +155,15 @@ namespace deadlineTrip.Controllers
             var marketPrice = await _cardsAPI.GetMarketPrice(card.Name);
 
             return Json(marketPrice);
+        }
+
+        public ActionResult AddToTheGame (int id)
+        {
+            Advertisement ad = _advertisementRepository.GetAdvertisement(id);
+            Game game = new Game { Card = ad,GameVote = 0, MaxVoteCount = 5 };
+            _gameRepository.AddCardToTheGame(game);
+            _advertisementRepository.AddToTheGame(id);
+            return RedirectToAction("userAdList", "Advertisement");
         }
         public ActionResult ApproveMarketPrice(decimal price, int advertisement)
         {

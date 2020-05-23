@@ -18,9 +18,10 @@ namespace deadlineTrip.Models
         public int Quantity { get; set; }
 
         public string AccountId { get; set; }
+        [ForeignKey("Card")]
         public int CardId { get; set; }
         public Card Card { get; set; }
-
+        public bool IsInGame { get; set; }
         public Auction Auction { get; set; }
         
         
