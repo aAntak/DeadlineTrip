@@ -10,5 +10,7 @@ namespace deadlineTrip.Models
         void AddCardToTheGame(Game game);
         Game GetCard(string userID);
         Game GetGame(int id);
+        void Update(int id);
+        void Delete(int id);
     }
 }

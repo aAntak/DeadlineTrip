@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Threading.Tasks;
 using deadlineTrip.Models;
@@ -49,8 +50,51 @@ namespace deadlineTrip.Controllers
             Account acc = _accountRepository.GetUserByEmail(accountId);
             GameVote vote = new GameVote { Game = game, User = acc, Vote_type = value};
             _gameVoteRepository.SaveVote(vote);
+            _gameRepository.Update(game.Id);
+            if (game.GameVote == game.MaxVoteCount) 
+            {
+                ChangePrice(vote);
+            }
             Game result = _gameRepository.GetCard(accountId);
             return View("GameScreen", result);
+        }
+        public void ChangePrice(GameVote vote) 
+        {
+            var Votes = _gameVoteRepository.GetVotes(vote.GameId);
+            int decrease = 0;
+            int increase = 0;
+            foreach (GameVote i in Votes) 
+            {
+                if (i.Vote_type == 1)
+                    decrease++;
+                if (i.Vote_type == 3)
+                    increase++;
+            }
+            if (decrease > increase) 
+            {
+                if ((decrease - increase) > 50)
+                {
+                    _advertisementRepository.ChangePriceAfterGame(false, vote.Game.CardId, 50);
+                }
+                else 
+                {
+                    _advertisementRepository.ChangePriceAfterGame(false, vote.Game.CardId, decrease-increase);
+                }
+            }
+            if (decrease < increase) 
+            {
+                if ((increase - decrease) > 50)
+                {
+                    _advertisementRepository.ChangePriceAfterGame(true, vote.Game.CardId, 50);
+                }
+                else
+                {
+                    _advertisementRepository.ChangePriceAfterGame(true, vote.Game.CardId, increase - decrease);
+                }
+            }
+            _gameVoteRepository.DeleteVotes(vote.GameId);
+            _gameRepository.Delete(vote.GameId);
+            _advertisementRepository.RemoveFromGame(vote.Game.CardId);
         }
     }
 }

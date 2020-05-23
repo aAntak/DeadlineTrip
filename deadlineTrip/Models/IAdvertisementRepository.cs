@@ -14,5 +14,7 @@ namespace deadlineTrip.Models
         void Update(int id, int quantity, decimal price);
         IEnumerable<Advertisement> GetAllAdvertisements();
         void AddToTheGame(int id);
+        void ChangePriceAfterGame(bool increse, int id, int byHowMuch);
+        void RemoveFromGame(int id);
     }
 }

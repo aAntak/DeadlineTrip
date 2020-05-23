@@ -50,6 +50,15 @@ namespace deadlineTrip.Models
                 }
                 return null;
         }
+        public void Update(int id) 
+        {
+            Game game = GetGame(id);
+            if (game != null)
+            {
+                game.GameVote = game.GameVote + 1;
+                _appDbContext.SaveChanges();
+            }
+        }
         public Game GetGame(int id)
         {
             Game ad = _appDbContext.Game
@@ -57,6 +66,16 @@ namespace deadlineTrip.Models
                 .SingleOrDefault(x => x.Id == id);
 
             return ad;
+        }
+        public void Delete(int id)
+        {
+
+            Game game = GetGame(id);
+
+            _appDbContext.Remove(game);
+
+            _appDbContext.SaveChanges();
+
         }
     }
 }

@@ -98,8 +98,36 @@ namespace deadlineTrip.Models
                 _appDbContext.SaveChanges();
             }
         }
+        public void RemoveFromGame(int id)
+        {
+            Advertisement ad = GetAdvertisement(id);
+            if (ad != null)
+            {
+                ad.IsInGame = false;
+                _appDbContext.SaveChanges();
+            }
+        }
 
 
+        public void ChangePriceAfterGame(bool increse, int id, int byHowMuch) 
+        {
+            Advertisement ad = GetAdvertisement(id);
+            decimal oldPrice = ad.Price;
+            decimal newPrice = ad.Price;
+            if (ad != null) 
+            {
+                if (increse)
+                {
+                    newPrice = oldPrice + (oldPrice * byHowMuch / 100);
+                }
+                else 
+                {
+                    newPrice = oldPrice - (oldPrice * byHowMuch/100);
+                }
+                ad.Price = newPrice;
+                _appDbContext.SaveChanges();
+            }
+        }
 
 
     }

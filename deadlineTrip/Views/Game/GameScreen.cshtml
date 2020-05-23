@@ -3,45 +3,53 @@
 @using Microsoft.AspNetCore.Http;
 <div id="sectionForm">
     <div class="row flex-center">
-
-        <!--Card-->
-        <div>
-            <div hidden id="auctionSuccess" class="alert alert-success" role="alert">
-                The auction has been successfully started
-            </div>
-            <!--Card image-->
-            <div class="view view-cascade">
-                <img style="margin:auto; width:200px; height:250px" src="@Model.Card.Card.Image" class="card-img-top" />
-            </div>
-            <!--/.Card image-->
-            <!--Card content-->
-            <div class="card-body card-body-cascade text-center ">
-                <h4><strong>@Model.Card.Card.Name</strong></h4>
-                <h4>Retumas: @Model.Card.Card.Retumas</h4>
-                <p>Level: @Model.Card.Card.Level</p>
-                <p>Attack: @Model.Card.Card.Attack</p>
-                <p>Defense: @Model.Card.Card.Defense</p>
-                <div class="md-form">
-                    <label asp-for="@Model.Card.Price" class="control-label active disabled"></label>
-                    <input asp-for="@Model.Card.Price" disabled class="form-control" />
-                    <span asp-validation-for="@Model.Card.Price" class="text-danger"></span>
+        @if (@Model != null)
+        {
+            <!--Card-->
+            <div>
+                <div hidden id="auctionSuccess" class="alert alert-success" role="alert">
+                    The auction has been successfully started
                 </div>
+                <!--Card image-->
+                <div class="view view-cascade">
+                    <img style="margin:auto; width:200px; height:250px" src="@Model.Card.Card.Image" class="card-img-top" />
+                </div>
+                <!--/.Card image-->
+                <!--Card content-->
+                <div class="card-body card-body-cascade text-center ">
+                    <h4><strong>@Model.Card.Card.Name</strong></h4>
+                    <h4>Retumas: @Model.Card.Card.Retumas</h4>
+                    <p>Level: @Model.Card.Card.Level</p>
+                    <p>Attack: @Model.Card.Card.Attack</p>
+                    <p>Defense: @Model.Card.Card.Defense</p>
+                    <div class="md-form">
+                        <label asp-for="@Model.Card.Price" class="control-label active disabled"></label>
+                        <input asp-for="@Model.Card.Price" disabled class="form-control" />
+                        <span asp-validation-for="@Model.Card.Price" class="text-danger"></span>
+                    </div>
+                </div>
+
+
             </div>
 
-
+            <!--/.Card-->
+        }
+        else 
+        {
+            <div class="flex-center">
+                <h1>There is no cards in the game!</h1>
+            </div>
+        }
         </div>
-
-        <!--/.Card-->
-
-    </div>
 
     <div hidden id="success" class="alert alert-success" role="alert">
         Successfully updated price
     </div>
     <div class="flex-center">
-
+        @if(@Model != null)
+        {
         <a class="btn btn-danger btn-sm" asp-controller="Game" asp-action="Vote"  asp-route-value=1 asp-route-id = "@Model.Id">Price is too small</a>
         <a class="btn btn-success btn-sm" asp-controller="Game" asp-action="Vote" asp-route-value=2 asp-route-id = "@Model.Id">Price is good</a>
         <a class="btn btn-primary btn-sm" asp-controller="Game" asp-action="Vote" asp-route-value=3 asp-route-id = "@Model.Id">Price is too high</a>
-
+        }
     </div>
