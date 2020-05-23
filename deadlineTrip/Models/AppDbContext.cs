@@ -26,6 +26,8 @@ namespace deadlineTrip.Models
         public DbSet<GameVote> GameVote { get; set; }
         public DbSet<Vote_type> Vote_type { get; set; }
         public DbSet<Auction> Auctions { get; set; }
+
+        public DbSet<AuctionBet> AuctionBets { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -61,6 +63,10 @@ namespace deadlineTrip.Models
                 HasOne(x => x.Auction).
                 WithOne(x => x.Advertisement).
                 HasForeignKey<Auction>(x => x.AdvertisementId);
+
+            modelBuilder.Entity<Auction>()
+                .HasMany(x => x.Bets)
+                .WithOne(x => x.Auction);
 
         }
 

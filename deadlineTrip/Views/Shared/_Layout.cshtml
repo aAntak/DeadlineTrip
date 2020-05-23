@@ -50,6 +50,8 @@
                 }
                 @if (@Context.Session.GetString("username") != null)
                 {
+                    <a class="nav-link" asp-controller="account" asp-action="openAccountDetails"> Profile</a>
+
                     <li class="nav-item">
                         @* du budai *@
                         <a class="nav-link" href="/Account/logout">logout </a>

@@ -15,6 +15,9 @@ namespace deadlineTrip.ViewModels
         public double? MarketPrice { get; set; }
 
         public bool ifInAuction { get; set; }
+
         public bool ifInGame { get; set; }
+
+        public bool? HasAuctionFinished { get; set; }
     }
 }

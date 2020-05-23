@@ -133,13 +133,18 @@ namespace deadlineTrip.Controllers
             return RedirectToAction("userAdList", "Advertisement");
         }
 
-        public ActionResult AdvertisementDetails(int id, double? marketPrice = null)
+        public ActionResult AdvertisementDetails(int id)
         {
             Advertisement ad = _advertisementRepository.GetAdvertisement(id);
             int cardId = ad.CardId;
             Card card = _cardRepository.GetCard(cardId);
 
-            AdsListViewModel result = new AdsListViewModel { Cards = card, Advertisements = ad, MarketPrice = marketPrice, ifInAuction = ad.Auction == null ? false : true };
+            AdsListViewModel result = new AdsListViewModel { Cards = card,
+                                                            Advertisements = ad, 
+                                                            ifInAuction = ad.Auction == null ? false : true,
+                                                            HasAuctionFinished = HasAuctionFinished(ad.Auction)
+
+            };
 
             return PartialView("CardDetailsPartial", result);
         }
@@ -165,6 +170,32 @@ namespace deadlineTrip.Controllers
             var ad = _advertisementRepository.GetAdvertisement(advertisement);
             _advertisementRepository.Update(ad.Id, ad.Quantity, price);
             return Ok();
+        }
+
+        [HttpPost]
+        public ActionResult PlaceBet(double? newPrice, int auctionId)
+        {
+            if(newPrice == null || _auctionRepo.GetHighestBetForAuction(auctionId) >= newPrice)
+                return BadRequest("Bet error");
+
+            if (_auctionRepo.CheckIfAuctionHasEnded(auctionId) == true)
+                return BadRequest("Auction has ended");
+
+            var userId = HttpContext.Session.GetString("username");
+            _auctionRepo.RegisterBet(new AuctionBet
+            {
+                Date = DateTime.Now,
+                UserId = userId,
+                AuctionId = auctionId,
+                Bet = newPrice.Value
+            });
+            return Ok();
+        }
+        private bool HasAuctionFinished(Auction auction)
+        {
+            if (auction == null) return true;
+            if (auction.EndDate > DateTime.Now) return false;
+            return true;
         }
 
     }

@@ -3,19 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using deadlineTrip.Models;
 
 namespace deadlineTrip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200522102512_auctionBet")]
+    partial class auctionBet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
+                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -53,8 +55,6 @@ namespace deadlineTrip.Migrations
 
                     b.Property<int>("CardId");
 
-                    b.Property<bool>("IsInGame");
-
                     b.Property<decimal>("Price");
 
                     b.Property<int>("Quantity");
@@ -68,9 +68,9 @@ namespace deadlineTrip.Migrations
                     b.ToTable("Advertisements");
 
                     b.HasData(
-                        new { Id = 1, AccountId = "Pirmas@gmail.com", CardId = 1, IsInGame = false, Price = 46m, Quantity = 46 },
-                        new { Id = 2, AccountId = "Pirmas@gmail.com", CardId = 2, IsInGame = false, Price = 52m, Quantity = 46 },
-                        new { Id = 3, AccountId = "Trecias@gmail.com", CardId = 3, IsInGame = false, Price = 14m, Quantity = 46 }
+                        new { Id = 1, AccountId = "Pirmas@gmail.com", CardId = 1, Price = 46m, Quantity = 46 },
+                        new { Id = 2, AccountId = "Pirmas@gmail.com", CardId = 2, Price = 52m, Quantity = 46 },
+                        new { Id = 3, AccountId = "Trecias@gmail.com", CardId = 3, Price = 14m, Quantity = 46 }
                     );
                 });
 
@@ -137,11 +137,11 @@ namespace deadlineTrip.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("RetumasId");
+                    b.Property<int?>("Retumasid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RetumasId");
+                    b.HasIndex("Retumasid");
 
                     b.ToTable("Card");
 
@@ -152,55 +152,15 @@ namespace deadlineTrip.Migrations
                     );
                 });
 
-            modelBuilder.Entity("deadlineTrip.Models.Game", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CardId");
-
-                    b.Property<int>("GameVote");
-
-                    b.Property<int>("MaxVoteCount");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.ToTable("Game");
-                });
-
-            modelBuilder.Entity("deadlineTrip.Models.GameVote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("GameId");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<int>("Vote_type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("GameVote");
-                });
-
             modelBuilder.Entity("deadlineTrip.Models.Retumas", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("pav");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Retumas");
                 });
@@ -241,25 +201,6 @@ namespace deadlineTrip.Migrations
                     b.ToTable("ShoppingCartItem");
                 });
 
-            modelBuilder.Entity("deadlineTrip.Models.Vote_type", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Vote_type");
-
-                    b.HasData(
-                        new { Id = 1, Name = "Price is good" },
-                        new { Id = 2, Name = "Price is too low" },
-                        new { Id = 3, Name = "Price is too big" }
-                    );
-                });
-
             modelBuilder.Entity("deadlineTrip.Models.Advertisement", b =>
                 {
                     b.HasOne("deadlineTrip.Models.Account")
@@ -292,27 +233,7 @@ namespace deadlineTrip.Migrations
                 {
                     b.HasOne("deadlineTrip.Models.Retumas", "Retumas")
                         .WithMany()
-                        .HasForeignKey("RetumasId");
-                });
-
-            modelBuilder.Entity("deadlineTrip.Models.Game", b =>
-                {
-                    b.HasOne("deadlineTrip.Models.Advertisement", "Card")
-                        .WithMany()
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("deadlineTrip.Models.GameVote", b =>
-                {
-                    b.HasOne("deadlineTrip.Models.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("deadlineTrip.Models.Account", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("Retumasid");
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.ShoppingCart", b =>
