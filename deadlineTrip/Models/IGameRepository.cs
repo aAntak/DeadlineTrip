@@ -12,5 +12,6 @@ namespace deadlineTrip.Models
         Game GetGame(int id);
         void Update(int id);
         void Delete(int id);
+        IEnumerable<Game> GetGames();
     }
 }

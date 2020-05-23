@@ -155,7 +155,7 @@ namespace deadlineTrip.Controllers
         public ActionResult AddToTheGame (int id)
         {
             Advertisement ad = _advertisementRepository.GetAdvertisement(id);
-            Game game = new Game { Card = ad,GameVote = 0, MaxVoteCount = 1 };
+            Game game = new Game { Card = ad,GameVote = 0, MaxVoteCount = 5 };
             _gameRepository.AddCardToTheGame(game);
             _advertisementRepository.AddToTheGame(id);
             return RedirectToAction("userAdList", "Advertisement");

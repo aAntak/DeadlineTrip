@@ -77,5 +77,16 @@ namespace deadlineTrip.Models
             _appDbContext.SaveChanges();
 
         }
+
+        public IEnumerable<Game> GetGames()
+        {
+            var ads = Games ??
+                   (Games =
+                       _appDbContext.Game.Include(x=> x.Card).ThenInclude(x=> x.Card)
+                           .ToList());
+
+            return ads;
+        }
+
     }
 }

@@ -31,10 +31,11 @@ namespace deadlineTrip.Controllers
             _cardRepository = cardRepository;
             _accountRepository = accountRepository;
         }
-        public ViewResult list() 
+        public ViewResult list()
         {
-
-            return View("List");
+            IEnumerable<Game> ads = _gameRepository.GetGames();
+            var result = ads;
+            return View("List", result);
         }
         public ViewResult OpenGame()
         {
@@ -95,6 +96,17 @@ namespace deadlineTrip.Controllers
             _gameVoteRepository.DeleteVotes(vote.GameId);
             _gameRepository.Delete(vote.GameId);
             _advertisementRepository.RemoveFromGame(vote.Game.CardId);
+        }
+
+        public ViewResult Delete(int Id)
+        {
+            Game games = _gameRepository.GetGame(Id);
+            _gameVoteRepository.DeleteVotes(Id);
+            _gameRepository.Delete(Id);
+            _advertisementRepository.RemoveFromGame(games.CardId);
+            IEnumerable<Game> ads = _gameRepository.GetGames();
+            var result = ads;
+            return View("List", result);
         }
     }
 }
