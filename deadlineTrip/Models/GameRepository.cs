@@ -24,7 +24,7 @@ namespace deadlineTrip.Models
             _appDbContext.SaveChanges();
         }
 
-        public Game GetCard(string userID) 
+        public Game GetGameByUserId(string userID) 
         {
             var games = Games ??
        (Games =

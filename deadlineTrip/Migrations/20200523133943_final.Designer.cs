@@ -10,8 +10,8 @@ using deadlineTrip.Models;
 namespace deadlineTrip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200522102512_auctionBet")]
-    partial class auctionBet
+    [Migration("20200523133943_final")]
+    partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,6 +55,8 @@ namespace deadlineTrip.Migrations
 
                     b.Property<int>("CardId");
 
+                    b.Property<bool>("IsInGame");
+
                     b.Property<decimal>("Price");
 
                     b.Property<int>("Quantity");
@@ -68,9 +70,9 @@ namespace deadlineTrip.Migrations
                     b.ToTable("Advertisements");
 
                     b.HasData(
-                        new { Id = 1, AccountId = "Pirmas@gmail.com", CardId = 1, Price = 46m, Quantity = 46 },
-                        new { Id = 2, AccountId = "Pirmas@gmail.com", CardId = 2, Price = 52m, Quantity = 46 },
-                        new { Id = 3, AccountId = "Trecias@gmail.com", CardId = 3, Price = 14m, Quantity = 46 }
+                        new { Id = 1, AccountId = "Pirmas@gmail.com", CardId = 1, IsInGame = false, Price = 46m, Quantity = 46 },
+                        new { Id = 2, AccountId = "Pirmas@gmail.com", CardId = 2, IsInGame = false, Price = 52m, Quantity = 46 },
+                        new { Id = 3, AccountId = "Trecias@gmail.com", CardId = 3, IsInGame = false, Price = 14m, Quantity = 46 }
                     );
                 });
 
@@ -137,11 +139,11 @@ namespace deadlineTrip.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("Retumasid");
+                    b.Property<int?>("RetumasId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Retumasid");
+                    b.HasIndex("RetumasId");
 
                     b.ToTable("Card");
 
@@ -152,15 +154,55 @@ namespace deadlineTrip.Migrations
                     );
                 });
 
-            modelBuilder.Entity("deadlineTrip.Models.Retumas", b =>
+            modelBuilder.Entity("deadlineTrip.Models.Game", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("pav");
+                    b.Property<int>("CardId");
 
-                    b.HasKey("id");
+                    b.Property<int>("GameVote");
+
+                    b.Property<int>("MaxVoteCount");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.ToTable("Game");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.GameVote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GameId");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<int>("Vote_type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GameVote");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.Retumas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Retumas");
                 });
@@ -201,6 +243,25 @@ namespace deadlineTrip.Migrations
                     b.ToTable("ShoppingCartItem");
                 });
 
+            modelBuilder.Entity("deadlineTrip.Models.Vote_type", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vote_type");
+
+                    b.HasData(
+                        new { Id = 1, Name = "Price is good" },
+                        new { Id = 2, Name = "Price is too low" },
+                        new { Id = 3, Name = "Price is too big" }
+                    );
+                });
+
             modelBuilder.Entity("deadlineTrip.Models.Advertisement", b =>
                 {
                     b.HasOne("deadlineTrip.Models.Account")
@@ -233,7 +294,27 @@ namespace deadlineTrip.Migrations
                 {
                     b.HasOne("deadlineTrip.Models.Retumas", "Retumas")
                         .WithMany()
-                        .HasForeignKey("Retumasid");
+                        .HasForeignKey("RetumasId");
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.Game", b =>
+                {
+                    b.HasOne("deadlineTrip.Models.Advertisement", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("deadlineTrip.Models.GameVote", b =>
+                {
+                    b.HasOne("deadlineTrip.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("deadlineTrip.Models.Account", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("deadlineTrip.Models.ShoppingCart", b =>

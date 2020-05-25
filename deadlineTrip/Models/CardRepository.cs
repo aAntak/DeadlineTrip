@@ -17,7 +17,7 @@ namespace deadlineTrip.Models
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<Card> getAllCards()
+        public IEnumerable<Card> GetCards()
         {
             return Cards ??
                  (Cards =

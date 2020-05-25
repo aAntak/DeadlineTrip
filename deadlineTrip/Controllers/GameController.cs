@@ -40,7 +40,7 @@ namespace deadlineTrip.Controllers
         public ViewResult OpenGame()
         {
             string accountId = HttpContext.Session.GetString("username");
-            Game result = _gameRepository.GetCard(accountId);
+            Game result = _gameRepository.GetGameByUserId(accountId);
 
             return View("GameScreen", result);
         }
@@ -56,7 +56,7 @@ namespace deadlineTrip.Controllers
             {
                 ChangePrice(vote);
             }
-            Game result = _gameRepository.GetCard(accountId);
+            Game result = _gameRepository.GetGameByUserId(accountId);
             return View("GameScreen", result);
         }
         public void ChangePrice(GameVote vote) 

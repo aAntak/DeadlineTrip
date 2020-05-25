@@ -8,7 +8,7 @@ namespace deadlineTrip.Models
     public interface IAdvertisementRepository
     {
         IEnumerable<Advertisement> GetAllUserAdvertisements();
-        void InsertRow(Advertisement ad);
+        void AddAdvertisment(Advertisement ad);
         void Delete(int id);
         Advertisement GetAdvertisement(int id);
         void Update(int id, int quantity, decimal price);

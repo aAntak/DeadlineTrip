@@ -33,11 +33,11 @@ namespace deadlineTrip.Models
 
             return items;
         }
-        public ShoppingCartItem GetItem(int id)
-        {
-            ShoppingCartItem item = _appDbContext.ShoppingCartItem.FirstOrDefault(x => x.ShoppingCartItemId == id);
-            return item;
-        }
+        //public ShoppingCartItem GetItem(int id)
+        //{
+        //    ShoppingCartItem item = _appDbContext.ShoppingCartItem.FirstOrDefault(x => x.ShoppingCartItemId == id);
+        //    return item;
+        //}
         
         public void AddToCart(Advertisement ad, ShoppingCart ShoppingCartId)
         {

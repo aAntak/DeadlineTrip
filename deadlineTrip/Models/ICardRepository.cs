@@ -8,7 +8,7 @@ namespace deadlineTrip.Models
     public interface ICardRepository
     {
 
-        IEnumerable<Card> getAllCards();
+        IEnumerable<Card> GetCards();
         Card GetCard(int id);
     }
 }

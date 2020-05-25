@@ -44,7 +44,7 @@ namespace deadlineTrip.Controllers
         {
 
             IEnumerable<Advertisement> ads = _advertisementRepository.GetAllUserAdvertisements();
-            IEnumerable<Card> cards = _cardRepository.getAllCards();
+            IEnumerable<Card> cards = _cardRepository.GetCards();
 
             var results = (from p in cards
                            join pm in ads on p.Id equals pm.CardId
@@ -56,7 +56,7 @@ namespace deadlineTrip.Controllers
         {
 
             IEnumerable<Advertisement> ads = _advertisementRepository.GetAllAdvertisements();
-            IEnumerable<Card> cards = _cardRepository.getAllCards();
+            IEnumerable<Card> cards = _cardRepository.GetCards();
 
             var results = (from p in cards
                            join pm in ads on p.Id equals pm.CardId
@@ -67,7 +67,7 @@ namespace deadlineTrip.Controllers
 
         public ViewResult Create()
         {
-            ViewBag.Cards = _cardRepository.getAllCards().Select(x=>x.Name).ToArray();
+            ViewBag.Cards = _cardRepository.GetCards().Select(x=>x.Name).ToArray();
 
             return View();
         }
@@ -86,7 +86,7 @@ namespace deadlineTrip.Controllers
 
 
                 Advertisement ad = new Advertisement { Price = price, Quantity = quantity, AccountId = accountId, CardId = cardId };
-                _advertisementRepository.InsertRow(ad);
+                _advertisementRepository.AddAdvertisment(ad);
 
                 TempData["success"] = "Advertisement has been added succesfully";
                 return RedirectToAction("userAdList", "Advertisement");

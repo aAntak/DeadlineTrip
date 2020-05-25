@@ -24,12 +24,12 @@ namespace deadlineTrip.Controllers
 
         public JsonResult AjaxGetCards()
         {
-            return Json(_cardRepository.getAllCards());
+            return Json(_cardRepository.GetCards());
         }
         public ViewResult List()
         {
 
-            return View(_cardRepository.getAllCards());
+            return View(_cardRepository.GetCards());
         }
         public ActionResult CardDetails(int id)
         {

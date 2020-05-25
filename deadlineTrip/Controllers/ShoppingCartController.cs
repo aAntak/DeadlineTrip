@@ -36,7 +36,7 @@ namespace deadlineTrip.Controllers
             
             IEnumerable<ShoppingCartItem> items = _shoppingCartRepository.GetShoppingCartListItems(cart.ShoppingCartId);
             IEnumerable<Advertisement> ads = _advertisementRepository.GetAllAdvertisements();
-            IEnumerable<Card> cards = _cardRepository.getAllCards();
+            IEnumerable<Card> cards = _cardRepository.GetCards();
 
             return View("CartIndex", items);
         }

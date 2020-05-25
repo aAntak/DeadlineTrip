@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace deadlineTrip.Migrations
 {
-    public partial class a : Migration
+    public partial class final : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,6 +194,28 @@ namespace deadlineTrip.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AuctionBets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Bet = table.Column<double>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    AuctionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuctionBets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuctionBets_Auctions_AuctionId",
+                        column: x => x.AuctionId,
+                        principalTable: "Auctions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GameVote",
                 columns: table => new
                 {
@@ -276,6 +298,11 @@ namespace deadlineTrip.Migrations
                 column: "CardId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuctionBets_AuctionId",
+                table: "AuctionBets",
+                column: "AuctionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Auctions_AdvertisementId",
                 table: "Auctions",
                 column: "AdvertisementId",
@@ -320,7 +347,7 @@ namespace deadlineTrip.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Auctions");
+                name: "AuctionBets");
 
             migrationBuilder.DropTable(
                 name: "GameVote");
@@ -330,6 +357,9 @@ namespace deadlineTrip.Migrations
 
             migrationBuilder.DropTable(
                 name: "Vote_type");
+
+            migrationBuilder.DropTable(
+                name: "Auctions");
 
             migrationBuilder.DropTable(
                 name: "Game");
